@@ -1,0 +1,13 @@
+version: "0.1"
+
+services:
+  react-service:
+    container_name: react-service
+    build: ./
+    volumes:
+      - './:/usr/src/app'
+    ports:
+      - '3337:3000' # expose ports - HOST:CONTAINER
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_TEST=yoyo
