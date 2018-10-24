@@ -10,6 +10,7 @@
 ```shell
 $> docker-compose up -d --build
 ```
+you can then access the application on [http://localhost:3337/](http://localhost:3337/)
 
 ### Environment variable
 You can add env variable via the [`docker-compose` file](./docker-compose-yml) under the `environment` variable.

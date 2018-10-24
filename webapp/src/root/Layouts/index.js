@@ -4,4 +4,4 @@ import UnauthenticatedLayout from './Unauthenticated/UnauthenticatedLayout';
 export {
   AuthenticatedLayout,
   UnauthenticatedLayout,
-}
+};

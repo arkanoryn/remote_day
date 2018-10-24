@@ -15,6 +15,6 @@ const UnauthenticatedLayout = ({ children }) => {
       </Content>
     </Layout>
   );
-}
+};
 
 export default UnauthenticatedLayout;

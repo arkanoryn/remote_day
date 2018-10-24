@@ -3,7 +3,7 @@ import { Menu, Layout } from 'antd';
 
 const { Header } = Layout;
 
-const AuthenticatedNavbar = ({ }) => {
+const AuthenticatedNavbar = () => {
   return (
     <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
       <div className="logo" />

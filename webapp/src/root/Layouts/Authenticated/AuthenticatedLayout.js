@@ -12,7 +12,13 @@ const AuthenticatedLayout = ({ children }) => {
       <AuthenticatedNavbar />
 
       <Content style={{ padding: '0 50px', marginTop: 64 }}>
-        <div style={{ background: '#fff', padding: 24, marginTop: 40, minHeight: 380 }}>
+        <div style={{
+          background: '#fff',
+          padding:    24,
+          marginTop:  40,
+          minHeight:  380,
+        }}
+        >
           {children}
         </div>
       </Content>
@@ -20,6 +26,6 @@ const AuthenticatedLayout = ({ children }) => {
       <Footer />
     </Layout>
   );
-}
+};
 
 export default AuthenticatedLayout;
