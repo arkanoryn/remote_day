@@ -4,6 +4,7 @@ import middlewares from './middlewares';
 import rootReducer from './rootReducer';
 import routes from './routes';
 import store from './store';
+import { AuthenticatedLayout, UnauthenticatedLayout } from './Layouts';
 
 export {
   client,
@@ -12,4 +13,6 @@ export {
   rootReducer,
   routes,
   store,
+  AuthenticatedLayout,
+  UnauthenticatedLayout,
 };

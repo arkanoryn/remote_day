@@ -1,6 +1,8 @@
 import React from 'react';
 import { renderRoutes } from 'react-router-config';
 
+import { UnauthenticatedLayout, AuthenticatedLayout } from '.';
+
 const Root = ({ route }) => {
   return (
     <div>
@@ -11,9 +13,9 @@ const Root = ({ route }) => {
 
 const Home = () => {
   return (
-    <div>
+    <AuthenticatedLayout>
       <h2>Home</h2>
-    </div>
+    </AuthenticatedLayout>
   );
 };
 
