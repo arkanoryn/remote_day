@@ -8,7 +8,7 @@
 
 ### Running the server
 ```shell
-$ docker-compose up -d --build
+$> docker-compose up -d --build
 ```
 
 ### Environment variable
@@ -16,7 +16,7 @@ You can add env variable via the [`docker-compose` file](./docker-compose-yml) u
 You would then need to update the docker image using
 
 ```shell
-$ docker-compose up -d
+$> docker-compose up -d
 ```
 
 The environment variable are accessible under the app via `process.env` and should be prefixed with `REACT_APP_`.
