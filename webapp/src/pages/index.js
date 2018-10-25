@@ -1,4 +1,4 @@
 import Login from './Login/Login';
+import RemoteEvents from './RemoteEvents/RemoteEvents';
 
-const tmp = '';
-export { Login as LoginPage, tmp };
+export { Login as LoginPage, RemoteEvents as RemoteEventsPage };

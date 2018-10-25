@@ -6,6 +6,7 @@ module.exports = {
     "import"
   ],
   "rules": {
+    "import/no-cycle": [2, { "maxDepth": 1 }],
     "object-curly-newline": ["error", {
       "ObjectExpression": { "multiline": true },
       "ObjectPattern": { "multiline": true },

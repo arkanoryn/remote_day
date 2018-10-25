@@ -7,7 +7,6 @@ import { ConnectedRouter } from 'connected-react-router';
 import { client, routes, store, history } from './root';
 import './App.css';
 
-
 const App = () => {
   return (
     <Provider store={store}>
@@ -19,6 +18,5 @@ const App = () => {
     </Provider>
   );
 };
-
 
 export default App;

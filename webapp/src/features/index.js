@@ -1,5 +1,4 @@
 import * as Authentication from './Authentication';
+import * as Events from './Events';
 
-const tmp = '';
-
-export { Authentication, tmp };
+export { Authentication, Events };
