@@ -5,7 +5,7 @@ services:
     container_name: react-service
     build: ./
     volumes:
-      - './:/usr/src/app'
+      - './:/usr/src/frontend'
     ports:
       - '3337:3000' # expose ports - HOST:CONTAINER
     environment:

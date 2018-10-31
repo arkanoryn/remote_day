@@ -1,18 +1,20 @@
 FROM node:latest
 
+LABEL maintainer="Pierre-Nicolas SORMANI <pierrenicolas.sormani@gmail.com>"
+
 # set working directory
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir /usr/src/frontend
+WORKDIR /usr/src/frontend
 
-# add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
+# add `/usr/src/frontend/node_modules/.bin` to $PATH
+ENV PATH /usr/src/frontend/node_modules/.bin:$PATH
 
-# install and cache app dependencies
-COPY package.json yarn.lock /usr/src/app/
+# install and cache frontend dependencies
+COPY package.json yarn.lock /usr/src/frontend/
 RUN yarn
 
-# add app
-ADD . /usr/src/app
+# add frontend
+ADD . /usr/src/frontend
 
-# start app
+# start frontend
 CMD ["yarn", "start"]
