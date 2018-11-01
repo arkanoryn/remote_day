@@ -2,10 +2,10 @@ defmodule RemoteDayWeb.Router do
   use RemoteDayWeb, :router
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
-  scope "/api", RemoteDayWeb do
-    pipe_through :api
+  scope "/api" do
+    forward("/graphiql", Absinthe.Plug.GraphiQL, schema: RemoteDayWeb.Schema, interface: :simple)
   end
 end

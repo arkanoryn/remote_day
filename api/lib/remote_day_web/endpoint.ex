@@ -1,41 +1,49 @@
 defmodule RemoteDayWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :remote_day
 
-  socket "/socket", RemoteDayWeb.UserSocket
+  socket("/socket", RemoteDayWeb.UserSocket)
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
-  plug Plug.Static,
-    at: "/", from: :remote_day, gzip: false,
+  plug(
+    Plug.Static,
+    at: "/",
+    from: :remote_day,
+    gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
+  )
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
-    plug Phoenix.CodeReloader
+    plug(Phoenix.CodeReloader)
   end
 
-  plug Plug.Logger
+  plug(Plug.Logger)
 
-  plug Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
+  plug(
+    Plug.Parsers,
+    parsers: [:urlencoded, :multipart, :json, Absinthe.Plug.Parser],
     pass: ["*/*"],
     json_decoder: Poison
+  )
 
-  plug Plug.MethodOverride
-  plug Plug.Head
+  plug(Plug.MethodOverride)
+  plug(Plug.Head)
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
-  plug Plug.Session,
+  plug(
+    Plug.Session,
     store: :cookie,
     key: "_remote_day_key",
     signing_salt: "bNGLdp6H"
+  )
 
-  plug RemoteDayWeb.Router
+  plug(RemoteDayWeb.Router)
 
   @doc """
   Callback invoked for dynamically configuring the endpoint.
