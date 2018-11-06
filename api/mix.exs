@@ -8,6 +8,13 @@ defmodule RemoteDay.Mixfile do
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -41,6 +48,7 @@ defmodule RemoteDay.Mixfile do
       {:absinthe, "~> 1.4.0"},
       {:cowboy, "~> 1.0"},
       {:ex_machina, "~> 2.2"},
+      {:excoveralls, "~> 0.10", only: :test},
       {:faker, "~> 0.11"},
       {:gettext, "~> 0.11"},
       {:phoenix_ecto, "~> 3.2"},

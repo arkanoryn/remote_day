@@ -22,9 +22,8 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_HOST=db
   test:
-    # image: remote_day-api
     build: ./
-    command: mix test
+    command: mix coveralls
     environment:
       - MIX_ENV=test
     volumes_from:
