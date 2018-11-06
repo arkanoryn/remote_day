@@ -28,7 +28,7 @@ defmodule RemoteDay.Mixfile do
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(:test), do: ["lib", "test/support", "test/factories"]
   defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
@@ -40,6 +40,7 @@ defmodule RemoteDay.Mixfile do
       {:absinthe_plug, "~> 1.4.0"},
       {:absinthe, "~> 1.4.0"},
       {:cowboy, "~> 1.0"},
+      {:ex_machina, "~> 2.2"},
       {:faker, "~> 0.11"},
       {:gettext, "~> 0.11"},
       {:phoenix_ecto, "~> 3.2"},
