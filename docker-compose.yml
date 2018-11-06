@@ -1,9 +1,9 @@
 version: "0.1"
 
 services:
-  api:
+  api-dev:
     container_name: remote_day-api
-    build: ./
+    build: ./api/
     ports:
       - "4000:4000"
     command: mix phx.server
@@ -11,7 +11,7 @@ services:
       - MIX_ENV=dev
       - PORT=4000
     volumes:
-      - './:/usr/src/backend'
+      - './api/:/usr/src/backend'
     links:
       - db
   db:
@@ -21,12 +21,22 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_HOST=db
-  test:
-    build: ./
+  api-test:
+    build: ./api/
     command: mix coveralls
     environment:
       - MIX_ENV=test
     volumes_from:
-      - api
+      - api-dev
     links:
       - db
+  react-dev:
+    container_name: remote_day-react
+    build: ./webapp
+    volumes:
+      - './webapp/:/usr/src/frontend'
+    ports:
+      - '3337:3000' # expose ports - HOST:CONTAINER
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_TEST=yoyo
