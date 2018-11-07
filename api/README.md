@@ -1,5 +1,7 @@
 # RemoteDay
 
+> Under is the generated README from Phoenix Framework. Look after the main [README](../README.md) for further details.
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`

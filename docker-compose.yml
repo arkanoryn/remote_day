@@ -21,15 +21,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_HOST=db
-  api-test:
-    build: ./api/
-    command: mix coveralls
-    environment:
-      - MIX_ENV=test
-    volumes_from:
-      - api-dev
-    links:
-      - db
   react-dev:
     container_name: remote_day-react
     build: ./webapp
