@@ -9,3 +9,8 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias RemoteDay.Repo
+alias RemoteDay.HomeOffice
+
+HomeOffice.create_event(%{date: Timex.today(), user_id: 12})

@@ -6,9 +6,10 @@
 * [Docker](https://www.docker.com/get-started)
 
 ### Setup
-1. run `docker-compose run api-dev mix deps.get` - this will fetch the required dependencies for the backend.
-1. run `docker-compose run api-dev mix ecto.setup` - this will create the database required for the backend _(Needs to be done on the first deployment)_.
-2. run `docker-compose up` - this will create the images for both the backend (`api-dev`) and the frontend (`react-dev`).
+1. run `docker-compose up --build` - this will build the docker images required for the project.
+2. run `docker-compose run api-dev mix deps.get` - this will fetch the required dependencies for the backend.
+3. run `docker-compose run api-dev mix ecto.setup` - this will create the database required for the backend _(Needs to be done on the first deployment)_.
+4. run `docker-compose up` - this will create the images for both the backend (`api-dev`) and the frontend (`react-dev`).
 Add the flag `-d` to run the apps in the background.
 
 ### Starting the servers
