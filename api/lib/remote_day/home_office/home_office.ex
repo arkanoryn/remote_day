@@ -38,4 +38,34 @@ defmodule RemoteDay.HomeOffice do
     |> Event.between_dates(starting_date, end_date)
     |> Repo.all()
   end
+
+  @doc """
+  Creates an Event with provided attrs and returns the newly created Event.
+  """
+  def create_event(%{} = attrs) do
+    %Event{}
+    |> Event.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates provided Event with provided attrs and returns the newly created Event.
+  """
+  def update_event(%Event{} = event, attrs) do
+    event
+    |> Event.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes provided Event and returns the last value of the Event.
+  """
+  def delete_event(%Event{} = event) do
+    Repo.delete(event)
+  end
+
+  def delete_event(id) when is_integer(id) do
+    Repo.get!(Event, id)
+    |> Repo.delete()
+  end
 end

@@ -20,10 +20,11 @@ defmodule RemoteDay.HomeOffice.Event do
   end
 
   @doc false
-  def changeset(event, attrs) do
+  def changeset(event, %{} = attrs) do
     event
     |> cast(attrs, ~w(user_id date kind)a)
-    |> validate_required(attrs, ~w(user_id date)a)
+    |> validate_required(~w(user_id date kind)a)
+    |> date_greater_or_equal_to_today(:date)
   end
 
   def between_dates(query, starting_date, end_date) do
@@ -32,5 +33,14 @@ defmodule RemoteDay.HomeOffice.Event do
 
   def from_date(query, starting_date) do
     from(c in query, where: c.date >= ^starting_date)
+  end
+
+  defp date_greater_or_equal_to_today(changeset, field) do
+    validate_change(changeset, field, fn _, date ->
+      case Timex.diff(date, Timex.today(), :days) >= 0 do
+        true -> []
+        false -> [{field, "can only be today or future date"}]
+      end
+    end)
   end
 end
