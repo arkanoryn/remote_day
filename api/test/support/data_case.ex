@@ -14,22 +14,25 @@ defmodule RemoteDay.DataCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox
+  alias Ecto.Changeset
+
   using do
     quote do
       alias RemoteDay.Repo
 
       import Ecto
-      import Ecto.Changeset
+      import Changeset
       import Ecto.Query
       import RemoteDay.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(RemoteDay.Repo)
+    :ok = Sandbox.checkout(RemoteDay.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(RemoteDay.Repo, {:shared, self()})
+      Sandbox.mode(RemoteDay.Repo, {:shared, self()})
     end
 
     :ok
@@ -44,7 +47,7 @@ defmodule RemoteDay.DataCase do
 
   """
   def errors_on(changeset) do
-    Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
+    Changeset.traverse_errors(changeset, fn {message, opts} ->
       Enum.reduce(opts, message, fn {key, value}, acc ->
         String.replace(acc, "%{#{key}}", to_string(value))
       end)

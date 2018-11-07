@@ -1,6 +1,9 @@
 defmodule HelloWorldTest do
   use ExUnit.Case
+
   import RemoteDay.Factory
+
+  alias Faker.Name
 
   test "the truth" do
     assert 1 + 1 == 2
@@ -8,9 +11,9 @@ defmodule HelloWorldTest do
 
   describe "Faker" do
     test "Faker is properly loaded" do
-      name = Faker.Name.name()
+      name = Name.name()
 
-      assert name == name
+      refute name == ""
     end
   end
 
@@ -20,7 +23,7 @@ defmodule HelloWorldTest do
     end
 
     test "Factory with provided attrs" do
-      attrs = %{name: Faker.Name.name()}
+      attrs = %{name: Name.name()}
 
       assert build(:test, attrs) == attrs
     end

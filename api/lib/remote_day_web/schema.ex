@@ -1,7 +1,9 @@
 defmodule RemoteDayWeb.Schema do
+  @moduledoc false
+
   use Absinthe.Schema
 
-  alias RemoteDayWeb.Resolvers
+  alias RemoteDayWeb.Resolvers.Tmp
 
   object :mine do
     field(:random, :string)
@@ -9,7 +11,7 @@ defmodule RemoteDayWeb.Schema do
 
   query do
     field(:random_tmp, :mine) do
-      resolve(&Resolvers.Tmp.my_random/3)
+      resolve(&Tmp.my_random/3)
     end
   end
 end

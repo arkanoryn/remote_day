@@ -14,6 +14,7 @@ defmodule RemoteDayWeb.ChannelCase do
   """
 
   use ExUnit.CaseTemplate
+  alias Ecto.Adapters.SQL.Sandbox
 
   using do
     quote do
@@ -25,13 +26,13 @@ defmodule RemoteDayWeb.ChannelCase do
     end
   end
 
-
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(RemoteDay.Repo)
+    :ok = Sandbox.checkout(RemoteDay.Repo)
+
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(RemoteDay.Repo, {:shared, self()})
+      Sandbox.mode(RemoteDay.Repo, {:shared, self()})
     end
+
     :ok
   end
-
 end

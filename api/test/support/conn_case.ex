@@ -13,12 +13,15 @@ defmodule RemoteDayWeb.ConnCase do
   of the test unless the test case is marked as async.
   """
 
+  alias Ecto.Adapters.SQL.Sandbox
+  alias Phoenix.ConnTest
+
   use ExUnit.CaseTemplate
 
   using do
     quote do
       # Import conveniences for testing with connections
-      use Phoenix.ConnTest
+      use ConnTest
       import RemoteDayWeb.Router.Helpers
 
       # The default endpoint for testing
@@ -26,13 +29,13 @@ defmodule RemoteDayWeb.ConnCase do
     end
   end
 
-
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(RemoteDay.Repo)
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(RemoteDay.Repo, {:shared, self()})
-    end
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
-  end
+    :ok = Sandbox.checkout(RemoteDay.Repo)
 
+    unless tags[:async] do
+      Sandbox.mode(RemoteDay.Repo, {:shared, self()})
+    end
+
+    {:ok, conn: ConnTest.build_conn()}
+  end
 end
