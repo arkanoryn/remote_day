@@ -6,9 +6,10 @@
 * [Docker](https://www.docker.com/get-started)
 
 ### Setup
-1. run `docker-compose run api-dev mix deps.get` - this will fetch the required dependencies for the backend.
-1. run `docker-compose run api-dev mix ecto.setup` - this will create the database required for the backend _(Needs to be done on the first deployment)_.
-2. run `docker-compose up` - this will create the images for both the backend (`api-dev`) and the frontend (`react-dev`).
+1. run `docker-compose up --build` - this will build the docker images required for the project.
+2. run `docker-compose run api-dev mix deps.get` - this will fetch the required dependencies for the backend.
+3. run `docker-compose run api-dev mix ecto.setup` - this will create the database required for the backend _(Needs to be done on the first deployment)_.
+4. run `docker-compose up` - this will create the images for both the backend (`api-dev`) and the frontend (`react-dev`).
 Add the flag `-d` to run the apps in the background.
 
 ### Starting the servers
@@ -36,7 +37,8 @@ $> docker-compose run -e "MIX_ENV=test" api-dev mix coveralls # will run the tes
 
 ### Dev notes
 * The URL for the backend is [http://localhost:4000/](http://localhost:4000/)
-* GraphiQL is accessible via [http://localhost:4000/api/graphiql](http://localhost:4000/api/graphiql)
+* The URL for the request is [http://localhost:4000/v1](http://localhost:4000/)
+* GraphiQL is accessible via [http://localhost:4000/test/graphiql](http://localhost:4000/test/graphiql)
 * The application is accessible via [http://localhost:3337/](http://localhost:3337/)
 * In React, the environment variable are accessible under the app via `process.env` and should be prefixed with `REACT_APP_`.
 In Elixir you need to use `System.get_env("VAR_NAME")`.

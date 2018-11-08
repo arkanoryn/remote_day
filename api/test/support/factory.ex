@@ -9,6 +9,10 @@ defmodule RemoteDay.Factory do
   """
   use ExMachina.Ecto, repo: RemoteDay.Repo
 
+  use RemoteDay.Factory.HomeOffice.{Event}
+
+  def save_list(list) when is_list(list), do: Enum.map(list, &insert(&1))
+
   def test_factory do
     %{
       name: "Jane Doe"

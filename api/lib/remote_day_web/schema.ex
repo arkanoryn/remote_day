@@ -3,15 +3,14 @@ defmodule RemoteDayWeb.Schema do
 
   use Absinthe.Schema
 
-  alias RemoteDayWeb.Resolvers.Tmp
-
-  object :mine do
-    field(:random, :string)
-  end
+  # imports of types
+  import_types(RemoteDayWeb.Schema.EventTypes)
 
   query do
-    field(:random_tmp, :mine) do
-      resolve(&Tmp.my_random/3)
-    end
+    import_fields(:events_queries)
+  end
+
+  mutation do
+    import_fields(:events_mutations)
   end
 end

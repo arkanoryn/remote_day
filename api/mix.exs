@@ -28,8 +28,10 @@ defmodule RemoteDay.Mixfile do
     [
       mod: {RemoteDay.Application, []},
       extra_applications: [
+        :absinthe_plug,
         :logger,
-        :absinthe_plug
+        :timex,
+        :timex_ecto
       ]
     ]
   end
@@ -57,7 +59,9 @@ defmodule RemoteDay.Mixfile do
       {:phoenix, "~> 1.3.4"},
       {:plug_cowboy, "~> 1.0"},
       {:poison, "~> 3.1.0"},
-      {:postgrex, ">= 0.0.0"}
+      {:postgrex, ">= 0.0.0"},
+      {:timex, "~> 3.1"},
+      {:timex_ecto, "~> 3.0"}
     ]
   end
 
