@@ -12,11 +12,10 @@ defmodule RemoteDayWeb.ConnCase do
   inside a transaction which is reset at the beginning
   of the test unless the test case is marked as async.
   """
+  use ExUnit.CaseTemplate
 
   alias Ecto.Adapters.SQL.Sandbox
   alias Phoenix.ConnTest
-
-  use ExUnit.CaseTemplate
 
   using do
     quote do

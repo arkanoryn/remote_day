@@ -65,7 +65,8 @@ defmodule RemoteDay.HomeOffice do
   end
 
   def delete_event(id) when is_integer(id) do
-    Repo.get!(Event, id)
+    Event
+    |> Repo.get!(id)
     |> Repo.delete()
   end
 end

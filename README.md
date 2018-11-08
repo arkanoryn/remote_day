@@ -37,7 +37,8 @@ $> docker-compose run -e "MIX_ENV=test" api-dev mix coveralls # will run the tes
 
 ### Dev notes
 * The URL for the backend is [http://localhost:4000/](http://localhost:4000/)
-* GraphiQL is accessible via [http://localhost:4000/api/graphiql](http://localhost:4000/api/graphiql)
+* The URL for the request is [http://localhost:4000/v1](http://localhost:4000/)
+* GraphiQL is accessible via [http://localhost:4000/test/graphiql](http://localhost:4000/test/graphiql)
 * The application is accessible via [http://localhost:3337/](http://localhost:3337/)
 * In React, the environment variable are accessible under the app via `process.env` and should be prefixed with `REACT_APP_`.
 In Elixir you need to use `System.get_env("VAR_NAME")`.

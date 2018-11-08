@@ -1,11 +1,15 @@
-defmodule RemoteDay.HomeOfficeTests.EventTest do
+defmodule RemoteDay.HomeOfficeTests.EventsTest do
+  @moduledoc """
+  Module describing the tests of the Event from HomeOffice
+  """
   use RemoteDay.DataCase
+
   import RemoteDay.Factory
+
   alias RemoteDay.HomeOffice
   alias RemoteDay.HomeOffice.Event
   alias Timex.Duration
 
-  # @future_date Timex.add(Timex.today(), Duration.from_days(Enum.random(1..42)))
   @past_date Timex.subtract(Timex.today(), Duration.from_days(Enum.random(1..42)))
 
   describe "list_events/0" do
