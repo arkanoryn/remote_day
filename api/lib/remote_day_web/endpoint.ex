@@ -43,6 +43,8 @@ defmodule RemoteDayWeb.Endpoint do
     signing_salt: "bNGLdp6H"
   )
 
+  plug(CORSPlug)
+
   plug(RemoteDayWeb.Router)
 
   @doc """
