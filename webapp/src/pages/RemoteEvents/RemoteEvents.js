@@ -19,7 +19,7 @@ const handleSubmit = ({
   events,
   fetchEvents,
   fetchEventsSuccess,
-  fetchEventsFailed,
+  fetchEventsFailure,
 }) => {
   return (variables) => {
     fetchEvents();
@@ -46,7 +46,7 @@ const handleSubmit = ({
         return true;
       })
       .catch((e) => {
-        fetchEventsFailed(e);
+        fetchEventsFailure(e);
         notification.error({ message: `An error occured. :( ${e}` });
         return false;
       });
@@ -88,10 +88,10 @@ const menu = (createEventRequest) => {
   );
 };
 
-const RemoteEvents = ({ handleOnClick }) => {
+const RemoteEvents = ({ handleOnClick, isLoading }) => {
   const actions = [
     <Dropdown key="addMenu" overlay={menu(handleOnClick)}>
-      <Button icon="plus" type="primary" shape="circle" />
+      <Button icon="plus" type="primary" shape="circle" loading={isLoading} />
     </Dropdown>,
   ];
 

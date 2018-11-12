@@ -8,9 +8,11 @@ import { graphql } from 'react-apollo';
 import { compose } from 'recompose';
 
 import EventCard from './EventCard';
+import { Apollo } from '../../components';
 import { eventsOperations } from '../../apollo_operations';
 
 const { Item: TimeItem } = Timeline;
+const { displayErrorState, displayLoadingState } = Apollo;
 
 const CALENDAR_FORMAT = {
   sameDay:  '[Today]',
@@ -71,6 +73,8 @@ const enhance = compose(
   connect(mapStateToProps, {}),
   graphql(eventsOperations.fetchEvents, fetchEventsOptions),
   withRouter,
+  displayLoadingState,
+  displayErrorState,
 );
 
 export default enhance(EventsTimeline);
