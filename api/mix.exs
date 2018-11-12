@@ -48,6 +48,7 @@ defmodule RemoteDay.Mixfile do
       {:absinthe_ecto, "~> 0.1.0"},
       {:absinthe_plug, "~> 1.4.0"},
       {:absinthe, "~> 1.4.0"},
+      {:cors_plug, "~> 2.0"},
       {:cowboy, "~> 1.0"},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.2"},

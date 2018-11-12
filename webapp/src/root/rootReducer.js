@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux';
-import { Authentication } from '../features';
+import { Authentication, Events } from '../features';
 
 const { authenticationReducer } = Authentication;
+const { eventsReducer } = Events;
 
-const rootReducer = combineReducers({ authenticationReducer });
+const rootReducer = combineReducers({
+  authentication: authenticationReducer,
+  events:         eventsReducer,
+});
 
 export default rootReducer;

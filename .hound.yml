@@ -1,3 +1,9 @@
 credo:
   enabled: true
   config_file: ./api/.credo.exs
+jshint:
+  config_file: ./webapp/.jshintrc
+eslint:
+  enabled: true
+  config_file: ./webapp/.eslintrc
+  ignore_file: ./webapp/.eslintignore

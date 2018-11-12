@@ -14,6 +14,8 @@ const Home = () => {
   return (
     <div>
       <h2>Home</h2>
+
+      you might want to visit `/remote`
     </div>
   );
 };
