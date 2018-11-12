@@ -57,7 +57,7 @@ const fetchEventsOptions = {
   options: () => {
     return {
       name:      'fetchEvents',
-      variables: { startingDate: moment().format('YYYY-MM-DD'), limit: 7 },
+      variables: eventsOperations.FETCH_EVENTS_DEFAULT_VARIABLES,
     };
   },
 };
