@@ -90,7 +90,7 @@ const menu = (createEventRequest) => {
 
 const RemoteEvents = ({ handleOnClick }) => {
   const actions = [
-    <Dropdown overlay={menu(handleOnClick)}>
+    <Dropdown key="addMenu" overlay={menu(handleOnClick)}>
       <Button icon="plus" type="primary" shape="circle" />
     </Dropdown>,
   ];
