@@ -1,3 +1,5 @@
+import { eventsOperations } from '../../apollo_operations';
+
 const FETCH_EVENTS_FAILURE = 'FETCH_EVENTS_FAILURE';
 const FETCH_EVENTS_REQUEST = 'FETCH_EVENTS_REQUEST';
 const FETCH_EVENTS_SUCCESS = 'FETCH_EVENTS_SUCCESS';
@@ -8,9 +10,10 @@ const fetchEventsSucceeded = (events) => { return { type: FETCH_EVENTS_SUCCESS, 
 const fetchEventsFailed = (errors) => { return { type: FETCH_EVENTS_FAILURE, errors }; };
 
 const initialState = {
-  isLoading: false,
-  events:    [],
-  errors:    [],
+  isLoading:            false,
+  events:               [],
+  errors:               [],
+  fetchEventsVariables: eventsOperations.FETCH_EVENTS_DEFAULT_VARIABLES,
 };
 
 const eventsReducer = (state = initialState, action) => {

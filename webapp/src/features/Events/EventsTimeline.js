@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Card, Timeline, Row } from 'antd';
 import { groupBy, map, sortBy } from 'lodash';
 import moment from 'moment';
@@ -54,15 +55,20 @@ const EventsTimeline = ({ data: { allEvents: events } }) => {
 };
 
 const fetchEventsOptions = {
-  options: () => {
+  options: ({ fetchEventsVariables }) => {
     return {
       name:      'fetchEvents',
-      variables: eventsOperations.FETCH_EVENTS_DEFAULT_VARIABLES,
+      variables: fetchEventsVariables,
     };
   },
 };
 
+const mapStateToProps = ({ events: { fetchEventsVariables } }) => {
+  return { fetchEventsVariables };
+};
+
 const enhance = compose(
+  connect(mapStateToProps, {}),
   graphql(eventsOperations.fetchEvents, fetchEventsOptions),
   withRouter,
 );

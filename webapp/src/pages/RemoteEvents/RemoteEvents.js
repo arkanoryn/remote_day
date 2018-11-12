@@ -10,19 +10,29 @@ import { AuthenticatedLayout } from '../../root';
 import { Events } from '../../features';
 
 const TITLE = 'Remote workers';
-const { EventsTimeline } = Events;
+const { EventsTimeline, actions: eventsActions } = Events;
 const { Item: MenuItem } = Menu;
 
-const handleSubmit = ({ createEventMutation }) => {
+const handleSubmit = ({
+  createEventMutation,
+  fetchEventsVariables,
+  events,
+  fetchEvents,
+  fetchEventsSuccess,
+  fetchEventsFailed,
+}) => {
   return (variables) => {
+    fetchEvents();
+
     return createEventMutation({
       variables,
       refetchQueries: [{
         query:     eventsOperations.fetchEvents,
-        variables: eventsOperations.FETCH_EVENTS_DEFAULT_VARIABLES,
+        variables: fetchEventsVariables,
       }],
     })
       .then(({ data: { createEvent } }) => {
+        fetchEventsSuccess([...events, createEvent]);
         notification.success({
           message: `Event for ${moment(createEvent.date).calendar(null, {
             sameDay:  '[today]',
@@ -36,6 +46,7 @@ const handleSubmit = ({ createEventMutation }) => {
         return true;
       })
       .catch((e) => {
+        fetchEventsFailed(e);
         notification.error({ message: `An error occured. :( ${e}` });
         return false;
       });
@@ -95,10 +106,15 @@ const RemoteEvents = ({ handleOnClick }) => {
   );
 };
 
-const mapStateToProps = () => {
-  return { startLoading: true };
+const mapStateToProps = ({ events: { fetchEventsVariables, isLoading, events } }) => {
+  return { fetchEventsVariables, isLoading, events };
 };
-const mapDispatchToProps = {};
+
+const mapDispatchToProps = {
+  fetchEvents:        eventsActions.fetchEvents,
+  fetchEventsSuccess: eventsActions.fetchEventsSucceeded,
+  fetchEventsFailure: eventsActions.fetchEventsFailed,
+};
 
 const enhance = compose(
   graphql(eventsOperations.createEvent, { name: 'createEventMutation' }),
