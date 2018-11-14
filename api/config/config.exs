@@ -12,16 +12,25 @@ config :remote_day,
 # Configures the endpoint
 config :remote_day, RemoteDayWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "M5GN6HImHWMj7ZBxkgZJX1PjXi41OQYn6iYqxx1+i/bB4I9/MtmgmQziaLyeeEMn",
+  secret_key_base: System.get_env("ENDPOINT_SECRET_KEY"),
   render_errors: [view: RemoteDayWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: RemoteDay.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: RemoteDay.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
+# Configures Guardian
+config :remote_day, RemoteDay.Account.Guardian,
+  issuer: "remote_day",
+  secret_key: System.get_env("GUARDIAN_SECRET_KEY")
+
+if Mix.env() == :dev do
+  config :mix_test_watch,
+    clear: true
+end
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

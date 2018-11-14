@@ -10,6 +10,7 @@ defmodule RemoteDay.Factory do
   use ExMachina.Ecto, repo: RemoteDay.Repo
 
   use RemoteDay.Factory.HomeOffice.{Event}
+  use RemoteDay.Factory.Account.{User}
 
   def save_list(list) when is_list(list), do: Enum.map(list, &insert(&1))
 

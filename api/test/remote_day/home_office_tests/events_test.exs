@@ -1,4 +1,4 @@
-defmodule RemoteDay.HomeOfficeTests.EventsTest do
+defmodule RemoteDay.Tests.HomeOffice.EventsTest do
   @moduledoc """
   Module describing the tests of the Event from HomeOffice
   """
