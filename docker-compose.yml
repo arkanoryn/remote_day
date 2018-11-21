@@ -10,6 +10,8 @@ services:
     environment:
       - MIX_ENV=dev
       - PORT=4000
+      - GUARDIAN_SECRET_KEY="dHGoGXqwyKKpc83nKROqFoLBtIxFtsQZhw+DutWiNVui7UUTKzJB91zjFStp6DdW"
+      - ENDPOINT_SECRET_KEY="i41OQYn6iYqxx4HmTt4vWQAwt0UWY80QnJwScgXXZfOPQX6AIGgPq2WyvOO7gWBwUcTKuN612zI"
     volumes:
       - './api/:/usr/src/backend'
     links:

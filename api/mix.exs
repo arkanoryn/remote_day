@@ -48,6 +48,8 @@ defmodule RemoteDay.Mixfile do
       {:absinthe_ecto, "~> 0.1.0"},
       {:absinthe_plug, "~> 1.4.0"},
       {:absinthe, "~> 1.4.0"},
+      {:bcrypt_elixir, "~> 1.0"},
+      {:comeonin, "~> 4.0"},
       {:cors_plug, "~> 2.0"},
       {:cowboy, "~> 1.0"},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
@@ -55,14 +57,16 @@ defmodule RemoteDay.Mixfile do
       {:excoveralls, "~> 0.10", only: :test},
       {:faker, "~> 0.11"},
       {:gettext, "~> 0.11"},
+      {:guardian, "~> 1.0"},
+      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
       {:phoenix_ecto, "~> 3.2"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix, "~> 1.3.4"},
       {:plug_cowboy, "~> 1.0"},
       {:poison, "~> 3.1.0"},
       {:postgrex, ">= 0.0.0"},
-      {:timex, "~> 3.1"},
-      {:timex_ecto, "~> 3.0"}
+      {:timex_ecto, "~> 3.0"},
+      {:timex, "~> 3.1"}
     ]
   end
 
@@ -76,6 +80,7 @@ defmodule RemoteDay.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
+      "test.watch": ["test.watch --stale"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end

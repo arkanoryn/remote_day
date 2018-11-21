@@ -12,8 +12,8 @@ config :logger, level: :warn
 # Configure your database
 config :remote_day, RemoteDay.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: System.get_env("DB_ENV_POSTGRES_USER"),
-  password: System.get_env("DB_ENV_POSTGRES_PASSWORD"),
-  hostname: System.get_env("DB_ENV_POSTGRES_HOST"),
+  username: System.get_env("DB_ENV_POSTGRES_USER") || "postgres",
+  password: System.get_env("DB_ENV_POSTGRES_PASSWORD") || "postgres",
+  hostname: System.get_env("DB_ENV_POSTGRES_HOST") || "localhost",
   database: "remote_day_test",
   pool: Ecto.Adapters.SQL.Sandbox

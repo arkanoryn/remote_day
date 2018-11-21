@@ -35,6 +35,13 @@ $> docker-compose up react-dev
 $> docker-compose run -e "MIX_ENV=test" api-dev mix coveralls # will run the tests suit and the coverage for the backend
 ```
 
+During development, it gets tiring/time consuming to use this command. If you've got a local setup, you can use `test.watch`
+```shell
+$> source api/.env # env variables required to run the test env
+$> MIX_ENV=test mix ecto.setup
+$> mix test.watch
+```
+
 ### Dev notes
 * The URL for the backend is [http://localhost:4000/](http://localhost:4000/)
 * The URL for the request is [http://localhost:4000/v1](http://localhost:4000/)
@@ -42,6 +49,9 @@ $> docker-compose run -e "MIX_ENV=test" api-dev mix coveralls # will run the tes
 * The application is accessible via [http://localhost:3337/](http://localhost:3337/)
 * In React, the environment variable are accessible under the app via `process.env` and should be prefixed with `REACT_APP_`.
 In Elixir you need to use `System.get_env("VAR_NAME")`.
+
+### Prod notes
+* Secret and dev env variables need to be put in the PROD env.
 
 #### Staging/Prod
 Note for myself: see [https://mherman.org/node-workshop/slides/react-docker/#55](https://mherman.org/node-workshop/slides/react-docker/#55) for further details.

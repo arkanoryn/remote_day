@@ -30,7 +30,7 @@ defmodule RemoteDayWeb.GraphQLHelper do
     """
     #{operation_type} #{operation_name}#{sanitize_types(args)} {
       #{operation_name}#{sanitize_args(args)} {
-        #{Enum.join(keys, ",\n")}
+        #{sanitize_keys(keys)}
       }
     }
     """
@@ -70,4 +70,13 @@ defmodule RemoteDayWeb.GraphQLHelper do
       "variables" => variables
     }
   end
+
+  defp sanitize_keys(keys) do
+    keys
+    |> Enum.map(&do_sanitize_key/1)
+    |> Enum.join("\n")
+  end
+
+  defp do_sanitize_key({key, list}), do: "#{key} { #{sanitize_keys(list)} }"
+  defp do_sanitize_key(k), do: k
 end
