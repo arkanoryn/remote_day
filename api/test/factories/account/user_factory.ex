@@ -3,9 +3,9 @@ defmodule RemoteDay.Factory.Account.User do
   Account.User Factory
   """
 
-  alias RemoteDay.Account.User
   alias Faker.Internet
   alias Faker.StarWars
+  alias RemoteDay.Account.User
 
   defmacro __using__(_opts) do
     quote do
