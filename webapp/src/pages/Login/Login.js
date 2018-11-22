@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Card, Col, notification, Row } from 'antd';
-import { isEmpty } from 'lodash';
 import { compose, withHandlers } from 'recompose';
+import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
+import { isEmpty } from 'lodash';
 
 import { UnauthenticatedLayout } from '../../root';
 import { Authentication } from '../../features';
@@ -31,11 +31,7 @@ const handleSubmit = ({ authenticationMutation, authenticate, authenticationSucc
   };
 };
 
-const Login = ({ isLoggedIn, onSubmit, authenticationInProgress }) => {
-  if (isLoggedIn) {
-    return <div>loggd in</div>;
-  }
-
+const Login = ({ onSubmit, authenticationInProgress }) => {
   return (
     <UnauthenticatedLayout>
       <Row>
