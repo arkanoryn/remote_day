@@ -5,13 +5,22 @@ import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import { isEmpty } from 'lodash';
 
-import { UnauthenticatedLayout } from '../../root';
+import { push as pushAction } from 'connected-react-router';
+import { UnauthenticatedLayout, paths } from '../../root';
 import { Authentication } from '../../features';
 import { authenticationOperations } from '../../apollo_operations';
 
 const { LoginForm, actions } = Authentication;
 
-const handleSubmit = ({ authenticationMutation, authenticate, authenticationSuccessful, authenticationFailure }) => {
+const handleSubmit = (
+  {
+    authenticate,
+    authenticationFailure,
+    authenticationMutation,
+    authenticationSuccessful,
+    push,
+  },
+) => {
   return (variables) => {
     authenticate(variables.remember);
     return authenticationMutation({
@@ -21,6 +30,7 @@ const handleSubmit = ({ authenticationMutation, authenticate, authenticationSucc
       .then(({ data: { authenticate: authenticationResults } }) => {
         authenticationSuccessful(authenticationResults.token, authenticationResults.user);
         notification.success({ message: 'Successfully logged in.' });
+        push(paths.REMOTE_EVENTS_PATH);
         return true;
       })
       .catch((e) => {
@@ -56,6 +66,7 @@ const mapDispatchToProps = {
   authenticate:             actions.authenticate,
   authenticationSuccessful: actions.authenticationSuccessful,
   authenticationFailure:    actions.authenticationFailure,
+  push:                     pushAction,
 };
 
 const enhance = compose(
