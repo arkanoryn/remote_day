@@ -1,18 +1,26 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Card, Col, Layout, Row } from 'antd';
+import Footer from '../Footer';
 
 const { Content } = Layout;
 
-const UnauthenticatedLayout = ({ children }) => {
+const UnauthenticatedLayout = ({ children, title }) => {
   return (
     <Layout>
       <Content style={{ padding: '0 50px', marginTop: 12 }}>
-        <h1>Unauthenticated</h1>
-
-        <div style={{ background: '#fff', padding: 24, minHeight: 380 }}>
-          {children}
-        </div>
+        <Row style={{ marginTop: 18 }}>
+          <Col span="24">
+            <Card
+              style={{ minHeight: 380 }}
+              title={title}
+            >
+              {children}
+            </Card>
+          </Col>
+        </Row>
       </Content>
+
+      <Footer />
     </Layout>
   );
 };
