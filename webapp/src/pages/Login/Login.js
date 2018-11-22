@@ -37,6 +37,9 @@ const handleSubmit = (
         if (variables.remember) {
           cookies.set('token', token);
           cookies.set('user', user);
+        } else {
+          cookies.set('token', '');
+          cookies.set('user', {});
         }
 
         notification.success({ message: 'Successfully logged in.' });

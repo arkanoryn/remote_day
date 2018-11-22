@@ -16,8 +16,9 @@ const authenticationFailure = (errors) => {
 };
 
 const logout = (cookies) => {
-  cookies.set('token', null);
-  cookies.set('user', null);
+  cookies.set('token', '');
+  cookies.set('user', {});
+
   return ({ type: LOGOUT });
 };
 

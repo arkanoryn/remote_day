@@ -3,15 +3,15 @@ import { ApolloProvider } from 'react-apollo';
 import { renderRoutes } from 'react-router-config';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import { CookiesProvider } from 'react-cookie';
+import { CookiesProvider, withCookies } from 'react-cookie';
 
 import { client, routes, store, history } from './root';
 import './App.css';
 
-const App = () => {
+const App = ({ cookies }) => {
   return (
     <CookiesProvider>
-      <Provider store={store}>
+      <Provider store={store(cookies)}>
         <ApolloProvider client={client}>
           <ConnectedRouter history={history}>
             {renderRoutes(routes)}
@@ -22,4 +22,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withCookies(App);
