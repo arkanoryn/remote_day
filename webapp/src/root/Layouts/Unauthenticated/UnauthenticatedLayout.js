@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Col, Layout, Row } from 'antd';
+import { Alert, Button, Card, Col, Layout, Row } from 'antd';
 import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { goBack as goBackAction } from 'connected-react-router';
@@ -9,18 +9,20 @@ const { Content } = Layout;
 
 const AlreadyLoggedIn = ({ goBack }) => {
   return (
-    <Row>
-      <Col xs={24} sm={24} md={{ span: 20, offset: 2 }} lg={{ span: 12, offset: 6 }} xl={{ span: 6, offset: 8 }}>
-        <Card
-          bordered={false}
-          style={{ minHeight: 380 }}
-          title="You are already logged in."
-        >
-          <Button type="primary" onClick={() => { goBack(); }}>
-            Go back
-          </Button>
-        </Card>
-      </Col>
+    <Row type="flex" justify="center" align="middle">
+      <Alert
+        message="Already logged in"
+        description={(
+          <div>
+            <Button type="primary" onClick={() => { goBack(); }} style={{ float: 'right', marginTop: 24 }}>
+              Go back
+            </Button>
+          </div>
+        )}
+        type="info"
+        showIcon
+        style={{ minWidth: 400, marginTop: 100 }}
+      />
     </Row>
   );
 };
