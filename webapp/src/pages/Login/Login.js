@@ -4,6 +4,7 @@ import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import { isEmpty } from 'lodash';
+import { withCookies } from 'react-cookie';
 
 import { push as pushAction } from 'connected-react-router';
 import { UnauthenticatedLayout, paths } from '../../root';
@@ -18,6 +19,7 @@ const handleSubmit = (
     authenticationFailure,
     authenticationMutation,
     authenticationSuccessful,
+    cookies,
     push,
   },
 ) => {
@@ -28,7 +30,15 @@ const handleSubmit = (
       refetchQueries: [],
     })
       .then(({ data: { authenticate: authenticationResults } }) => {
-        authenticationSuccessful(authenticationResults.token, authenticationResults.user);
+        const { token, user } = authenticationResults;
+
+        authenticationSuccessful(token, user);
+
+        if (variables.remember) {
+          cookies.set('token', token);
+          cookies.set('user', user);
+        }
+
         notification.success({ message: 'Successfully logged in.' });
         push(paths.REMOTE_EVENTS_PATH);
         return true;
@@ -75,4 +85,4 @@ const enhance = compose(
   withHandlers({ onSubmit: handleSubmit }),
 );
 
-export default enhance(Login);
+export default withCookies(enhance(Login));

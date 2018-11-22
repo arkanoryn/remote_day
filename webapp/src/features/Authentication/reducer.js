@@ -1,6 +1,7 @@
 const AUTHENTICATE = 'AUTHENTICATE_IN_PROGRESS';
 const AUTHENTICATE_SUCCESS = 'AUTHENTICATE_SUCCESS';
 const AUTHENTICATE_FAILURE = 'AUTHENTICATE_FAILURE';
+const LOGOUT = 'AUTHENTICATION/LOGOUT';
 
 const authenticate = (remember) => {
   return { type: AUTHENTICATE, remember };
@@ -12,6 +13,12 @@ const authenticationSuccessful = (token, user) => {
 
 const authenticationFailure = (errors) => {
   return { type: AUTHENTICATE_FAILURE, errors };
+};
+
+const logout = (cookies) => {
+  cookies.set('token', null);
+  cookies.set('user', null);
+  return ({ type: LOGOUT });
 };
 
 const initialState = {
@@ -59,6 +66,13 @@ const authenticationReducer = (state = initialState, action) => {
       });
     }
 
+    case LOGOUT: {
+      return ({
+        ...state,
+        ...initialState,
+      });
+    }
+
     default:
       return state;
   }
@@ -69,4 +83,5 @@ export {
   authenticate,
   authenticationSuccessful,
   authenticationFailure,
+  logout,
 };
