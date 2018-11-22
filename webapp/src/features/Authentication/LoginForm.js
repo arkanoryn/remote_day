@@ -4,7 +4,7 @@ import { Form, Icon } from 'antd';
 import { FormItems } from '../../components';
 
 const { decorators, FormItemCheckbox, FormItemInput, FormItemSubmitButton } = FormItems;
-const USERNAME_STR = 'Username';
+const EMAIL_STR = 'Email';
 
 const handleSubmit = (e, form, onSubmit) => {
   e.preventDefault();
@@ -15,18 +15,18 @@ const handleSubmit = (e, form, onSubmit) => {
   });
 };
 
-const WrappedLoginForm = ({ form, onSubmit }) => {
+const WrappedLoginForm = ({ form, onSubmit, inProgress }) => {
   const { getFieldDecorator } = form;
 
   return (
     <Form onSubmit={(e) => { return (handleSubmit(e, form, onSubmit)); }} className="login-form">
       <FormItemInput
-        id="username"
+        id="email"
         decorator={decorators.requiredDecorator()}
         getFieldDecorator={getFieldDecorator}
         customInputProps={{
           prefix:      (<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />),
-          placeholder: USERNAME_STR,
+          placeholder: EMAIL_STR,
         }}
       />
 
@@ -45,7 +45,7 @@ const WrappedLoginForm = ({ form, onSubmit }) => {
         Remember me
       </FormItemCheckbox>
 
-      <FormItemSubmitButton />
+      <FormItemSubmitButton buttonProps={{ loading: inProgress }} buttonText="Login" />
     </Form>
   );
 };

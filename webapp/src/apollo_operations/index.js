@@ -1,8 +1,7 @@
 import * as eventsOperations from './events';
-
-const tmp = '';
+import * as authenticationOperations from './authentication';
 
 export {
+  authenticationOperations,
   eventsOperations,
-  tmp,
 };

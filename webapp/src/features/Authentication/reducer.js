@@ -6,8 +6,8 @@ const authenticate = (remember) => {
   return { type: AUTHENTICATE, remember };
 };
 
-const authenticationSuccessful = (token) => {
-  return { type: AUTHENTICATE_SUCCESS, token };
+const authenticationSuccessful = (token, user) => {
+  return { type: AUTHENTICATE_SUCCESS, token, user };
 };
 
 const authenticationFailure = (errors) => {
@@ -15,38 +15,49 @@ const authenticationFailure = (errors) => {
 };
 
 const initialState = {
-  errors:                   [],
-  token:                    null,
   authenticationInProgress: false,
+  errors:                   [],
   remember:                 false,
+  token:                    null,
+  user:                     {},
 };
 
 const authenticationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTHENTICATE:
+    case AUTHENTICATE: {
+      const { remember } = action;
+
       return ({
         ...state,
-        remember:                 action.remember,
-        errors:                   [],
-        token:                    null,
         authenticationInProgress: true,
-      });
-
-    case AUTHENTICATE_SUCCESS:
-      return ({
-        ...state,
         errors:                   [],
-        token:                    action.token,
-        authenticationInProgress: false,
+        remember,
+        token:                    null,
+        user:                     {},
       });
+    }
 
-    case AUTHENTICATE_FAILURE:
+    case AUTHENTICATE_SUCCESS: {
+      const { token, user } = action;
+
       return ({
         ...state,
+        authenticationInProgress: false,
+        errors:                   [],
+        token,
+        user,
+      });
+    }
+
+    case AUTHENTICATE_FAILURE: {
+      return ({
+        ...state,
+        authenticationInProgress: false,
         errors:                   action.errors,
         token:                    null,
-        authenticationInProgress: false,
+        user:                     {},
       });
+    }
 
     default:
       return state;

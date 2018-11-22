@@ -1,22 +1,47 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Card, Col, Row } from 'antd';
+import { Card, Col, notification, Row } from 'antd';
+import { isEmpty } from 'lodash';
+import { compose, withHandlers } from 'recompose';
+import { graphql } from 'react-apollo';
+
 import { UnauthenticatedLayout } from '../../root';
 import { Authentication } from '../../features';
+import { authenticationOperations } from '../../apollo_operations';
 
 const { LoginForm, actions } = Authentication;
 
-const Login = ({ authenticate }) => {
-  const onSubmit = (values) => {
-    authenticate(values.remember);
+const handleSubmit = ({ authenticationMutation, authenticate, authenticationSuccessful, authenticationFailure }) => {
+  return (variables) => {
+    authenticate(variables.remember);
+    return authenticationMutation({
+      variables,
+      refetchQueries: [],
+    })
+      .then(({ data: { authenticate: authenticationResults } }) => {
+        authenticationSuccessful(authenticationResults.token, authenticationResults.user);
+        notification.success({ message: 'Successfully logged in.' });
+        return true;
+      })
+      .catch((e) => {
+        authenticationFailure(e);
+        notification.error({ message: 'An error occured. :(' });
+        return false;
+      });
   };
+};
+
+const Login = ({ isLoggedIn, onSubmit, authenticationInProgress }) => {
+  if (isLoggedIn) {
+    return <div>loggd in</div>;
+  }
 
   return (
     <UnauthenticatedLayout>
       <Row>
         <Col xs={24} sm={24} md={{ span: 20, offset: 2 }} lg={{ span: 12, offset: 6 }} xl={{ span: 6, offset: 8 }}>
           <Card title="Login">
-            <LoginForm onSubmit={onSubmit} />
+            <LoginForm onSubmit={onSubmit} inProgress={authenticationInProgress} />
           </Card>
         </Col>
       </Row>
@@ -24,10 +49,23 @@ const Login = ({ authenticate }) => {
   );
 };
 
-const mapStateToProps = ({ authentication }) => {
-  return ({ authentication });
+const mapStateToProps = ({ authentication: { token, authenticationInProgress } }) => {
+  return ({
+    authenticationInProgress,
+    isLoggedIn: !isEmpty(token),
+  });
 };
 
-const mapDispatchToProps = { authenticate: actions.authenticate };
+const mapDispatchToProps = {
+  authenticate:             actions.authenticate,
+  authenticationSuccessful: actions.authenticationSuccessful,
+  authenticationFailure:    actions.authenticationFailure,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+const enhance = compose(
+  graphql(authenticationOperations.authenticate, { name: 'authenticationMutation' }),
+  connect(mapStateToProps, mapDispatchToProps),
+  withHandlers({ onSubmit: handleSubmit }),
+);
+
+export default enhance(Login);
