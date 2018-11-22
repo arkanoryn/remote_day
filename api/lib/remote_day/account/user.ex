@@ -12,7 +12,6 @@ defmodule RemoteDay.Account.User do
   use Timex.Ecto.Timestamps
   import Comeonin.Bcrypt, only: [hashpwsalt: 1]
   import Ecto.Changeset
-  import Ecto.Query, only: [from: 2]
 
   @required_fields ~w(username password password_confirmation email)a
 
