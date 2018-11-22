@@ -1,13 +1,44 @@
 import React from 'react';
-import { Card, Layout, Col, Row } from 'antd';
-import { map } from 'lodash';
+import { Alert, Button, Card, Layout, Col, Row } from 'antd';
+import { map, isEmpty } from 'lodash';
+import { connect } from 'react-redux';
+import { push as pushAction } from 'connected-react-router';
 
 import AuthenticatedNavbar from './AuthenticatedNavbar';
+import { paths } from '../..';
 import Footer from '../Footer';
 
 const { Content } = Layout;
 
-const AuthenticatedLayout = ({ children, title, actions = [] }) => {
+const Unauthorized = ({ push }) => {
+  return (
+    <Row type="flex" justify="center" align="middle">
+      <Alert
+        message="Unauthorized access"
+        description={(
+          <div style={{ padding: 10 }}>
+            You need to be logged in in order to access this page.
+
+            <div>
+              <Button onClick={() => { push(paths.LOGIN_PATH); }} style={{ float: 'right', marginTop: 10 }}>
+                Go to login
+              </Button>
+            </div>
+          </div>
+        )}
+        type="warning"
+        showIcon
+        style={{ minWidth: 400, marginTop: 100 }}
+      />
+    </Row>
+  );
+};
+
+const AuthenticatedLayout = ({ push, isLoggedIn, children, title, actions = [] }) => {
+  if (!isLoggedIn) {
+    return <Unauthorized push={push} />;
+  }
+
   return (
     <Layout>
       <AuthenticatedNavbar />
@@ -31,4 +62,10 @@ const AuthenticatedLayout = ({ children, title, actions = [] }) => {
   );
 };
 
-export default AuthenticatedLayout;
+const mapStateToProps = ({ authentication: { token } }) => {
+  return { isLoggedIn: !isEmpty(token) };
+};
+
+const mapDispatchToProps = { push: pushAction };
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthenticatedLayout);

@@ -4,9 +4,9 @@ import { LoginPage, RemoteEventsPage } from '../pages';
 
 const Root = ({ route }) => {
   return (
-    <div>
+    <React.Fragment>
       {renderRoutes(route.routes)}
-    </div>
+    </React.Fragment>
   );
 };
 
