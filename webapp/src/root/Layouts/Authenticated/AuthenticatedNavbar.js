@@ -43,6 +43,7 @@ const AuthenticatedNavbar = ({ push, cookies, username, logout }) => {
 const mapStateToProps = ({ authentication: { user } }) => {
   return { username: user.username || '' };
 };
+
 const mapDispatchToProps = {
   logout: actions.logout,
   push:   pushAction,
