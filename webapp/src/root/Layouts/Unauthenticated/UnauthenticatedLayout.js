@@ -3,7 +3,6 @@ import { Button, Card, Col, Layout, Row } from 'antd';
 import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { goBack as goBackAction } from 'connected-react-router';
-
 import Footer from '../Footer';
 
 const { Content } = Layout;

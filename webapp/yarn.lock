@@ -5800,6 +5800,11 @@ joi@^11.1.1:
     isemail "3.x.x"
     topo "2.x.x"
 
+js-cookie@^2.1.4:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.0.tgz#1b2c279a6eece380a12168b92485265b35b1effb"
+  integrity sha1-Gywnmm7s44ChIWi5JIUmWzWx7/s=
+
 js-levenshtein@^1.1.3:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/js-levenshtein/-/js-levenshtein-1.1.4.tgz#3a56e3cbf589ca0081eb22cd9ba0b1290a16d26e"
@@ -8938,6 +8943,13 @@ recursive-readdir@2.2.2:
   integrity sha512-nRCcW9Sj7NuZwa2XvH9co8NPeXUBhZP7CRKJtU+cS6PW9FpCIFoI5ib0NT1ZrbNuPoRy0ylyCaUL8Gih4LSyFg==
   dependencies:
     minimatch "3.0.4"
+
+redux-cookies-middleware@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/redux-cookies-middleware/-/redux-cookies-middleware-0.1.3.tgz#556aad73c7d67c5feb373775af145dbae3b2cb19"
+  integrity sha1-VWqtc8fWfF/rNzd1rxRduuOyyxk=
+  dependencies:
+    js-cookie "^2.1.4"
 
 redux-logger@^3.0.6:
   version "3.0.6"
