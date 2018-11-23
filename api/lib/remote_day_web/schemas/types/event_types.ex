@@ -35,6 +35,7 @@ defmodule RemoteDayWeb.Schema.Types.Events do
         """
       )
 
+      middleware(Middleware.Authorize)
       resolve(&HomeOffice.all_events/3)
     end
   end
