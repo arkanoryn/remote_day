@@ -40,6 +40,10 @@ defmodule RemoteDay.Account do
     end
   end
 
+  def data(params), do: Dataloader.Ecto.new(Repo, query: &query/2, default_params: params)
+
+  def query(query, _args), do: query
+
   defp authenticate(user, password) do
     case user do
       nil ->

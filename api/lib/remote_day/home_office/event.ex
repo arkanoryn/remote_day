@@ -8,14 +8,17 @@ defmodule RemoteDay.HomeOffice.Event do
   """
   use Ecto.Schema
   use Timex.Ecto.Timestamps
+
   import Ecto.Changeset
   import Ecto.Query, only: [from: 2]
 
+  alias RemoteDay.Account.User
+
   schema "events" do
-    field(:user_id, :integer)
     field(:date, Timex.Ecto.Date)
     field(:kind, :string, default: "day")
 
+    belongs_to(:user, User)
     timestamps()
   end
 
@@ -25,6 +28,7 @@ defmodule RemoteDay.HomeOffice.Event do
     |> cast(attrs, ~w(user_id date kind)a)
     |> validate_required(~w(user_id date kind)a)
     |> date_greater_or_equal_to_today(:date)
+    |> foreign_key_constraint(:user_id)
   end
 
   def between_dates(query, starting_date, end_date) do

@@ -10,8 +10,11 @@ defmodule RemoteDay.Account.User do
   """
   use Ecto.Schema
   use Timex.Ecto.Timestamps
+
   import Comeonin.Bcrypt, only: [hashpwsalt: 1]
   import Ecto.Changeset
+
+  alias RemoteDay.HomeOffice.Event
 
   @required_fields ~w(username password password_confirmation email)a
 
@@ -21,6 +24,8 @@ defmodule RemoteDay.Account.User do
     field(:password, :string, virtual: true)
     field(:password_confirmation, :string, virtual: true)
     field(:password_hash, :string)
+
+    has_many(:events, RemoteDay.HomeOffice.Event)
 
     timestamps()
   end

@@ -53,6 +53,7 @@ defmodule RemoteDay.Mixfile do
       {:cors_plug, "~> 2.0"},
       {:cowboy, "~> 1.0"},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
+      {:dataloader, "~> 1.0.0"},
       {:ex_machina, "~> 2.2"},
       {:excoveralls, "~> 0.10", only: :test},
       {:faker, "~> 0.11"},
