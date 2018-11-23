@@ -15,10 +15,10 @@ const { Item: TimeItem } = Timeline;
 const { displayErrorState, displayLoadingState } = Apollo;
 
 const CALENDAR_FORMAT = {
-  sameDay: '[Today]',
-  nextDay: '[Tomorrow]',
+  sameDay:  '[Today]',
+  nextDay:  '[Tomorrow]',
   nextWeek: 'dddd',
-  lastDay: '[Yesterday]',
+  lastDay:  '[Yesterday]',
   lastWeek: '[Last] dddd',
   sameElse: 'DD/MM/YYYY',
 };
@@ -59,7 +59,7 @@ const EventsTimeline = ({ data: { allEvents: events } }) => {
 const fetchEventsOptions = {
   options: ({ fetchEventsVariables }) => {
     return {
-      name: 'fetchEvents',
+      name:      'fetchEvents',
       variables: fetchEventsVariables,
     };
   },
