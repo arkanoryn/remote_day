@@ -12,7 +12,7 @@ const App = ({ cookies }) => {
   return (
     <CookiesProvider>
       <Provider store={store(cookies)}>
-        <ApolloProvider client={client}>
+        <ApolloProvider client={client(cookies)}>
           <ConnectedRouter history={history}>
             {renderRoutes(routes)}
           </ConnectedRouter>
