@@ -4,6 +4,7 @@ defmodule RemoteDayWeb.Schema.Types.Events do
   """
   use Absinthe.Schema.Notation
 
+  alias RemoteDayWeb.Schema.Middleware
   alias RemoteDayWeb.Resolvers.HomeOffice
 
   object :event do
@@ -44,6 +45,7 @@ defmodule RemoteDayWeb.Schema.Types.Events do
       arg(:kind, :string)
       arg(:date, non_null(:string))
 
+      middleware(Middleware.Authorize)
       resolve(&HomeOffice.create_event/3)
     end
   end
