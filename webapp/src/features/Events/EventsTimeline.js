@@ -36,12 +36,12 @@ const EventsTimeline = ({ data: { allEvents: events } }) => {
               <Card title={moment(date).calendar(null, CALENDAR_FORMAT)} type="inner">
                 <Row gutter={16}>
                   {
-                    map(group, ({ id, kind, userId }) => {
+                    map(group, ({ id, kind, user }) => {
                       return (
                         <EventCard
                           key={`${date}-${id}`}
                           kind={kind}
-                          user={{ userId }}
+                          user={{ username: 'John Doe', email: 'psormani@avarteq.de' }}
                         />
                       );
                     })
