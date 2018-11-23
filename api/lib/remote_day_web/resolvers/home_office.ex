@@ -39,7 +39,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
     end
   end
 
-  def create_event(root, %{date: _d, user_id: _uid} = attrs, info),
+  def create_event(root, %{date: _d} = attrs, info),
     do: create_event(root, Map.put(attrs, :kind, @default_event_kind), info)
 
   defp string_to_date(str), do: str |> Timex.parse!("{YYYY}-{M}-{D}") |> Timex.to_date()
