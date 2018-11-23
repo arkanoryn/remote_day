@@ -26,16 +26,24 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
         %{date: date, kind: _k} = attrs,
         %{context: %{current_user: current_user}}
       ) do
-    attrs = if is_bitstring(date), do: %{attrs | date: string_to_date(date)}, else: attrs
-    attrs = Map.put(attrs, :user_id, current_user.id)
+    events = HomeOffice.get_events_by!(date: date, user_id: current_user.id)
 
-    case HomeOffice.create_event(attrs) do
-      {:ok, event} ->
-        {:ok, event}
+    case Enum.empty?(events) do
+      true ->
+        attrs = if is_bitstring(date), do: %{attrs | date: string_to_date(date)}, else: attrs
+        attrs = Map.put(attrs, :user_id, current_user.id)
 
-      {:error, _errors} ->
-        # TODO: improve error hanlding
-        {:error, "An error occured."}
+        case HomeOffice.create_event(attrs) do
+          {:ok, event} ->
+            {:ok, event}
+
+          {:error, errors} ->
+            parsed_errors = Enum.map(errors.errors, fn {key, {msg, _}} -> "#{key}: #{msg}" end)
+            {:error, parsed_errors}
+        end
+
+      false ->
+        {:error, "A user can only create one event per day"}
     end
   end
 

@@ -57,6 +57,14 @@ defmodule RemoteDay.HomeOffice do
     |> Repo.update()
   end
 
+  def get_events_by!(opts \\ []) do
+    Event
+    |> (fn q -> if opts[:date], do: Event.by_date(q, opts[:date]), else: q end).()
+    |> (fn q -> if opts[:user_id], do: Event.by_user_id(q, opts[:user_id]), else: q end).()
+    |> (fn q -> if opts[:kind], do: Event.by_kind(q, opts[:kind]), else: q end).()
+    |> Repo.all()
+  end
+
   @doc """
   Deletes provided Event and returns the last value of the Event.
   """

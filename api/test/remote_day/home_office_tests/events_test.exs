@@ -170,6 +170,41 @@ defmodule RemoteDay.Tests.HomeOffice.EventsTest do
     end
   end
 
+  describe "get_events_by/1" do
+    setup do
+      today = insert_list(5, :event)
+      past = 3 |> build_list(:event) |> past_date() |> save_list()
+      future = 4 |> build_list(:event) |> future_date() |> save_list()
+
+      [today: today, past: past, future: future]
+    end
+
+    test "date should return list of events at given date", %{future: future} do
+      event = List.first(future)
+
+      assert events = HomeOffice.get_events_by!(date: event.date)
+      assert Enum.member?(events, event)
+    end
+
+    test "date and user_id should return list of events at given date and user_id", %{
+      future: future
+    } do
+      event = List.first(future)
+
+      assert events = HomeOffice.get_events_by!(date: event.date, user_id: event.user_id)
+      assert Enum.member?(events, event)
+    end
+
+    test "date and kind should return list of events at given date and kind", %{
+      future: future
+    } do
+      event = List.first(future)
+
+      assert events = HomeOffice.get_events_by!(date: event.date, kind: event.kind)
+      assert Enum.member?(events, event)
+    end
+  end
+
   describe("delete_event/1") do
     setup do
       %{event: insert(:event)}

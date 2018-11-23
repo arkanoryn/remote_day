@@ -77,7 +77,35 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.CreateEventTest do
         |> json_response(200)
         |> parse_errors()
 
-      assert List.first(response)["message"] == "An error occured."
+      assert List.first(response)["message"] == "date: can only be today or future date"
+    end
+
+    @tag :authenticated
+    test "a user can only create one event per day", %{conn: conn, auth_user: user} do
+      attrs = params_for(:event, date: format_date(@today))
+      args = @required_event_args ++ @optional_event_args
+
+      create_event_query =
+        build_query(@operation_type, @operation_name, args, ~w(id kind date user_id))
+
+      response =
+        conn
+        |> graphql_query(query: create_event_query, variables: attrs)
+        |> json_response(200)
+        |> parse_response(@operation_name)
+
+      assert response["id"]
+      assert response["kind"] == attrs.kind
+      assert response["date"] == attrs.date
+      assert response["user_id"] == user.id
+
+      second_response =
+        conn
+        |> graphql_query(query: create_event_query, variables: attrs)
+        |> json_response(200)
+        |> parse_errors()
+
+      assert List.first(second_response)["message"] == "A user can only create one event per day"
     end
   end
 
