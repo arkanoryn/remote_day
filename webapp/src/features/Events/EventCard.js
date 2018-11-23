@@ -1,5 +1,6 @@
 import React from 'react';
-import { Avatar, Card, Col } from 'antd';
+import { Card, Col } from 'antd';
+import { Gravatar } from '../../components';
 
 const { Meta } = Card;
 const DAY_BACKGROUND_IMG = 'https://images.pexels.com/photos/847402/pexels-photo-847402.jpeg?auto=compress&cs'
@@ -22,14 +23,10 @@ const EventCard = ({ user, comment, kind }) => {
       >
         <Meta
           avatar={(
-            <Avatar
-              src={`https://api.adorable.io/avatars/100/${user.userId}.png`}
-              style={{ marginTop: -44 }}
-              size="large"
-            />
+            <Gravatar email={user.email} />
           )}
-          title={`${user.userId}`}
-          description={comment || 'NC'}
+          title={`${user.username}`}
+          description={comment}
         />
       </Card>
     </Col>
