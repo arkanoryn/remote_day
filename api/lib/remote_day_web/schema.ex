@@ -2,10 +2,11 @@ defmodule RemoteDayWeb.Schema do
   @moduledoc false
 
   use Absinthe.Schema
+  alias RemoteDayWeb.Schema.Types.{Events, Users}
 
   # imports of types
-  import_types(RemoteDayWeb.Schema.EventTypes)
-  import_types(RemoteDayWeb.Schema.Types.Users)
+  import_types(Events)
+  import_types(Users)
 
   query do
     import_fields(:events_queries)

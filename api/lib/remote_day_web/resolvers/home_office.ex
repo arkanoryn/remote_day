@@ -23,7 +23,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
 
   def create_event(
         _root,
-        %{date: date, kind: _k, user_id: _uid} = attrs,
+        %{date: date, kind: _k} = attrs,
         %{context: %{current_user: current_user}}
       ) do
     attrs = if is_bitstring(date), do: %{attrs | date: string_to_date(date)}, else: attrs

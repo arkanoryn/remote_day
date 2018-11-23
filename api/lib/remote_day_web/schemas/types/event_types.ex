@@ -1,4 +1,4 @@
-defmodule RemoteDayWeb.Schema.EventTypes do
+defmodule RemoteDayWeb.Schema.Types.Events do
   @moduledoc """
   objects, queries and mutations related to the Events
   """
