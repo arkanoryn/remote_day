@@ -20,7 +20,8 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.ListEventsTest do
     [today: today, past: past, future: future]
   end
 
-  describe "all_events/3" do
+  describe "all_events/3 when user is authenticated" do
+    @tag :authenticated
     test "returns todays and futures events when startingDate is 'today'", context do
       %{conn: conn, today: today, past: past, future: future} = context
       valid_events = Enum.map(today ++ future, &%{"id" => "#{&1.id}"})
@@ -39,6 +40,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.ListEventsTest do
       assert response -- past_events == response
     end
 
+    @tag :authenticated
     test "returns events starting from startingDate when startingDate is today's date", context do
       %{conn: conn, today: today, past: past, future: future} = context
       valid_events = Enum.map(today ++ future, &%{"id" => "#{&1.id}"})
@@ -59,6 +61,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.ListEventsTest do
       assert response -- past_events == response
     end
 
+    @tag :authenticated
     test "returns events starting from startingDate when startingDate is another date than today",
          context do
       %{conn: conn, today: today, past: past, future: future} = context
@@ -84,6 +87,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.ListEventsTest do
       assert response -- valid_events == []
     end
 
+    @tag :authenticated
     test "returns events starting from startingDate today and up to limit (2 days)",
          context do
       %{conn: conn, today: today, past: past, future: future} = context
@@ -113,6 +117,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.ListEventsTest do
       assert response -- valid_events == []
     end
 
+    @tag :authenticated
     test "returns events starting from startingDate different than today and up to limit (2 days)",
          context do
       %{conn: conn, today: today, past: past, future: future} = context
@@ -143,6 +148,21 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.ListEventsTest do
         |> parse_response(@operation_name)
 
       assert response -- valid_events == []
+    end
+  end
+
+  describe "all_events/3 when user is not authenticated" do
+    test "should return an error", %{conn: conn} do
+      args = [{:startingDate, "String!"}]
+      events_query = build_query(:query, @operation_name, args, ~w(id))
+
+      response =
+        conn
+        |> graphql_query(query: events_query, variables: %{startingDate: "today"})
+        |> json_response(200)
+        |> parse_errors()
+
+      assert List.first(response)["message"] == "unauthenticated"
     end
   end
 end

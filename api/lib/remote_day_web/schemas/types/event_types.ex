@@ -1,9 +1,10 @@
-defmodule RemoteDayWeb.Schema.EventTypes do
+defmodule RemoteDayWeb.Schema.Types.Events do
   @moduledoc """
   objects, queries and mutations related to the Events
   """
   use Absinthe.Schema.Notation
 
+  alias RemoteDayWeb.Schema.Middleware
   alias RemoteDayWeb.Resolvers.HomeOffice
 
   object :event do
@@ -34,6 +35,7 @@ defmodule RemoteDayWeb.Schema.EventTypes do
         """
       )
 
+      middleware(Middleware.Authorize)
       resolve(&HomeOffice.all_events/3)
     end
   end
@@ -43,8 +45,8 @@ defmodule RemoteDayWeb.Schema.EventTypes do
     field(:create_event, :event) do
       arg(:kind, :string)
       arg(:date, non_null(:string))
-      arg(:user_id, non_null(:id))
 
+      middleware(Middleware.Authorize)
       resolve(&HomeOffice.create_event/3)
     end
   end

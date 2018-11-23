@@ -13,11 +13,12 @@
 alias RemoteDay.Repo
 alias RemoteDay.{Account, HomeOffice}
 
-HomeOffice.create_event(%{date: Timex.today(), user_id: 12})
+{:ok, user} =
+  Account.create_user(%{
+    email: "test@user.com",
+    password: "password",
+    password_confirmation: "password",
+    username: "Alpha Tester"
+  })
 
-Account.create_user(%{
-  email: "test@user.com",
-  password: "password",
-  password_confirmation: "password",
-  username: "Alpha Tester"
-})
+HomeOffice.create_event(%{date: Timex.today(), user_id: user.id})

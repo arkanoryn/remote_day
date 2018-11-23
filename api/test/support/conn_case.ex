@@ -16,6 +16,9 @@ defmodule RemoteDayWeb.ConnCase do
 
   alias Ecto.Adapters.SQL.Sandbox
   alias Phoenix.ConnTest
+  alias Plug.Conn
+  alias RemoteDay.Account
+  alias RemoteDay.Repo
 
   using do
     quote do
@@ -29,12 +32,25 @@ defmodule RemoteDayWeb.ConnCase do
   end
 
   setup tags do
-    :ok = Sandbox.checkout(RemoteDay.Repo)
+    :ok = Sandbox.checkout(Repo)
 
     unless tags[:async] do
-      Sandbox.mode(RemoteDay.Repo, {:shared, self()})
+      Sandbox.mode(Repo, {:shared, self()})
     end
 
-    {:ok, conn: ConnTest.build_conn()}
+    {conn, user} =
+      if tags[:authenticated] do
+        user_params = RemoteDay.Factory.params_for(:user)
+        {:ok, user} = Account.create_user(user_params)
+        {:ok, _u, token} = Account.login(user_params)
+
+        conn = ConnTest.build_conn() |> Conn.put_req_header("authorization", "Bearer #{token}")
+
+        {conn, user}
+      else
+        {ConnTest.build_conn(), nil}
+      end
+
+    {:ok, conn: conn, auth_user: user}
   end
 end

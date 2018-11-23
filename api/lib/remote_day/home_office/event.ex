@@ -31,8 +31,20 @@ defmodule RemoteDay.HomeOffice.Event do
     from(c in query, where: c.date >= ^starting_date, where: c.date < ^end_date)
   end
 
+  def by_date(query, date) do
+    from(c in query, where: c.date >= ^date)
+  end
+
   def from_date(query, starting_date) do
     from(c in query, where: c.date >= ^starting_date)
+  end
+
+  def by_user_id(query, user_id) do
+    from(c in query, where: c.user_id >= ^user_id)
+  end
+
+  def by_kind(query, kind) do
+    from(c in query, where: c.kind >= ^kind)
   end
 
   defp date_greater_or_equal_to_today(changeset, field) do
