@@ -43,7 +43,6 @@ defmodule RemoteDayWeb.Schema.EventTypes do
     field(:create_event, :event) do
       arg(:kind, :string)
       arg(:date, non_null(:string))
-      arg(:user_id, non_null(:id))
 
       resolve(&HomeOffice.create_event/3)
     end

@@ -21,8 +21,13 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
   def all_events(root, %{starting_date: starting_date}, info),
     do: all_events(root, %{starting_date: starting_date, limit: 0}, info)
 
-  def create_event(_root, %{date: date, kind: _k, user_id: _uid} = attrs, _info) do
+  def create_event(
+        _root,
+        %{date: date, kind: _k, user_id: _uid} = attrs,
+        %{context: %{current_user: current_user}}
+      ) do
     attrs = if is_bitstring(date), do: %{attrs | date: string_to_date(date)}, else: attrs
+    attrs = Map.put(attrs, :user_id, current_user.id)
 
     case HomeOffice.create_event(attrs) do
       {:ok, event} ->
