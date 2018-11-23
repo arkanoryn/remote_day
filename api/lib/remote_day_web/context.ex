@@ -1,4 +1,6 @@
 defmodule RemoteDayWeb.Context do
+  @moduledoc false
+
   @behaviour Plug
 
   import Plug.Conn

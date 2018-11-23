@@ -16,6 +16,7 @@ defmodule RemoteDayWeb.ConnCase do
 
   alias Ecto.Adapters.SQL.Sandbox
   alias Phoenix.ConnTest
+  alias Plug.Conn
   alias RemoteDay.Account
   alias RemoteDay.Repo
 
@@ -43,8 +44,7 @@ defmodule RemoteDayWeb.ConnCase do
         {:ok, user} = Account.create_user(user_params)
         {:ok, _u, token} = Account.login(user_params)
 
-        conn =
-          ConnTest.build_conn() |> Plug.Conn.put_req_header("authorization", "Bearer #{token}")
+        conn = ConnTest.build_conn() |> Conn.put_req_header("authorization", "Bearer #{token}")
 
         {conn, user}
       else

@@ -1,5 +1,11 @@
 defmodule RemoteDayWeb.Schema.Middleware.Authorize do
+  @moduledoc """
+  Absinthe Middleware to verify if the token received in parameter is valid and
+  the user is authorized to access the resources
+  """
   @behaviour Absinthe.Middleware
+
+  alias Absinthe.Resolution
 
   require Logger
 
@@ -10,7 +16,7 @@ defmodule RemoteDayWeb.Schema.Middleware.Authorize do
 
       _ ->
         Logger.info("Unauthorized request: user not authenticated.")
-        Absinthe.Resolution.put_result(resolution, {:error, "unauthenticated"})
+        Resolution.put_result(resolution, {:error, "unauthenticated"})
     end
   end
 end
