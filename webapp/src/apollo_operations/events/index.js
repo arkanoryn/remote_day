@@ -7,7 +7,10 @@ const fetchEvents = gql`
       id
       date
       kind
-      userId
+      user {
+        email
+        username
+      }
     }
   }
 `;
@@ -15,10 +18,7 @@ const fetchEvents = gql`
 const createEvent = gql`
   mutation createEvent($date: String!, $kind: String!) {
     createEvent(date: $date, kind: $kind) {
-      id
       date
-      kind
-      userId
     }
   }
 `;

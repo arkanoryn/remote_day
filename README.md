@@ -56,3 +56,5 @@ In Elixir you need to use `System.get_env("VAR_NAME")`.
 #### Staging/Prod
 Note for myself: see [https://mherman.org/node-workshop/slides/react-docker/#55](https://mherman.org/node-workshop/slides/react-docker/#55) for further details.
 
+## Personal note:
+Look after this repository for GraphQL usage: [https://github.com/emcasa/backend/](https://github.com/emcasa/backend/)

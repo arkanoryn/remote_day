@@ -10,15 +10,14 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias RemoteDay.Repo
 alias RemoteDay.{Account, HomeOffice}
 
 {:ok, user} =
   Account.create_user(%{
-    email: "test@user.com",
+    email: "test3@user.com",
     password: "password",
     password_confirmation: "password",
-    username: "Alpha Tester"
+    username: "Charlie Doe"
   })
 
 HomeOffice.create_event(%{date: Timex.today(), user_id: user.id})

@@ -15,10 +15,10 @@ const { Item: TimeItem } = Timeline;
 const { displayErrorState, displayLoadingState } = Apollo;
 
 const CALENDAR_FORMAT = {
-  sameDay:  '[Today]',
-  nextDay:  '[Tomorrow]',
+  sameDay: '[Today]',
+  nextDay: '[Tomorrow]',
   nextWeek: 'dddd',
-  lastDay:  '[Yesterday]',
+  lastDay: '[Yesterday]',
   lastWeek: '[Last] dddd',
   sameElse: 'DD/MM/YYYY',
 };
@@ -32,16 +32,16 @@ const EventsTimeline = ({ data: { allEvents: events } }) => {
       {
         map(groupedEvents, (group, date) => {
           return (
-            <TimeItem key={`${moment(date).calendar(null, CALENDAR_FORMAT)}`}>
+            <TimeItem key={`event-group-${date}`}>
               <Card title={moment(date).calendar(null, CALENDAR_FORMAT)} type="inner">
                 <Row gutter={16}>
                   {
                     map(group, ({ id, kind, user }) => {
                       return (
                         <EventCard
-                          key={`${date}-${id}`}
+                          key={`event-${id}`}
                           kind={kind}
-                          user={{ username: 'John Doe', email: 'psormani@avarteq.de' }}
+                          user={user}
                         />
                       );
                     })
@@ -59,7 +59,7 @@ const EventsTimeline = ({ data: { allEvents: events } }) => {
 const fetchEventsOptions = {
   options: ({ fetchEventsVariables }) => {
     return {
-      name:      'fetchEvents',
+      name: 'fetchEvents',
       variables: fetchEventsVariables,
     };
   },

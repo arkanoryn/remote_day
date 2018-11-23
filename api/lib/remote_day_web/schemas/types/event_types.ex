@@ -4,6 +4,9 @@ defmodule RemoteDayWeb.Schema.Types.Events do
   """
   use Absinthe.Schema.Notation
 
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
+
+  alias RemoteDay.Account
   alias RemoteDayWeb.Schema.Middleware
   alias RemoteDayWeb.Resolvers.HomeOffice
 
@@ -11,7 +14,10 @@ defmodule RemoteDayWeb.Schema.Types.Events do
     field(:id, non_null(:id))
     field(:kind, :string)
     field(:date, non_null(:string), description: "string representing the date (YYYY-MM-DD)")
-    field(:user_id, :integer)
+
+    field(:user, :user) do
+      resolve(dataloader(Account))
+    end
   end
 
   object :events_queries do
