@@ -27,6 +27,7 @@ defmodule RemoteDay.HomeOffice do
 
   def list_events(starting_date, 0) do
     Event
+    |> Event.with_user()
     |> Event.from_date(starting_date)
     |> Repo.all()
   end
@@ -35,6 +36,7 @@ defmodule RemoteDay.HomeOffice do
     end_date = Timex.add(starting_date, Timex.Duration.from_days(limit))
 
     Event
+    |> Event.with_user()
     |> Event.between_dates(starting_date, end_date)
     |> Repo.all()
   end

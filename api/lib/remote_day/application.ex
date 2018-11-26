@@ -14,9 +14,10 @@ defmodule RemoteDay.Application do
       # Start the Ecto repository
       supervisor(RemoteDay.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(Endpoint, [])
+      supervisor(Endpoint, []),
       # Start your own worker by calling: RemoteDay.Worker.start_link(arg1, arg2, arg3)
       # worker(RemoteDay.Worker, [arg1, arg2, arg3]),
+      worker(RemoteDay.Scheduler, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

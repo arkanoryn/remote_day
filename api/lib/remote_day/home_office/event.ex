@@ -51,6 +51,10 @@ defmodule RemoteDay.HomeOffice.Event do
     from(c in query, where: c.kind >= ^kind)
   end
 
+  def with_user(query) do
+    from(c in query, preload: [:user])
+  end
+
   defp date_greater_or_equal_to_today(changeset, field) do
     validate_change(changeset, field, fn _, date ->
       case Timex.diff(date, Timex.today(), :days) >= 0 do

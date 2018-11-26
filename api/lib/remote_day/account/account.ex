@@ -7,6 +7,10 @@ defmodule RemoteDay.Account do
   alias RemoteDay.Account.{Guardian, User}
   alias RemoteDay.Repo
 
+  def list_users() do
+    Repo.all(User)
+  end
+
   def create_user(
         %{email: _email, username: _username, password: _pwd, password_confirmation: _pwd_conf} =
           attrs

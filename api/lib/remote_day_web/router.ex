@@ -5,6 +5,10 @@ defmodule RemoteDayWeb.Router do
     plug(RemoteDayWeb.Context)
   end
 
+  if Mix.env() == :dev do
+    forward("/sent_emails", Bamboo.SentEmailViewerPlug)
+  end
+
   scope "/v1" do
     pipe_through(:graphql)
 

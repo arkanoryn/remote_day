@@ -44,3 +44,6 @@ config :remote_day, RemoteDay.Repo,
   hostname: System.get_env("DB_ENV_POSTGRES_HOST"),
   database: "remote_day_dev",
   pool_size: 10
+
+# config Mailer
+config :remote_day, RemoteDay.Mailer, adapter: Bamboo.LocalAdapter
