@@ -25,7 +25,7 @@ defmodule RemoteDay.Account.User do
     field(:password_confirmation, :string, virtual: true)
     field(:password_hash, :string)
 
-    has_many(:events, RemoteDay.HomeOffice.Event)
+    has_many(:events, Event)
 
     timestamps()
   end

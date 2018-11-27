@@ -1,11 +1,10 @@
 import React from 'react';
-import { Button, Col, Dropdown, Menu, Layout, Row, Icon } from 'antd';
+import { Col, Dropdown, Menu, Layout, Row, Icon } from 'antd';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
-import { filter, map } from 'lodash';
+import { map } from 'lodash';
 import { push as pushAction } from 'connected-react-router';
 import { withCookies } from 'react-cookie';
-import { withRouter } from 'react-router-dom';
 
 import { paths } from '../..';
 import { Gravatar } from '../../../components';
@@ -19,14 +18,14 @@ const LIST_REMOTE = paths.REMOTE_EVENTS_PATH;
 
 const MENU_ITEMS = [
   {
-    icon: 'team',
-    title: 'Remote workers',
+    icon:   'team',
+    title:  'Remote workers',
     action: LIST_REMOTE,
   },
   {
-    icon: 'stop',
-    title: 'filler',
-    action: 'tmp',
+    icon:    'stop',
+    title:   'filler',
+    action:  'tmp',
     options: { disabled: true },
   },
 ];
@@ -123,13 +122,13 @@ const AuthenticatedNavbar = (props) => {
 const mapStateToProps = ({ authentication: { user } }) => {
   return {
     username: user.username || '',
-    email: user.email || '',
+    email:    user.email || '',
   };
 };
 
 const mapDispatchToProps = {
   logout: actions.logout,
-  push: pushAction,
+  push:   pushAction,
 };
 
 const enhance = compose(

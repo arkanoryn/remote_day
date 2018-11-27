@@ -29,6 +29,7 @@ defmodule RemoteDay.Mixfile do
       mod: {RemoteDay.Application, []},
       extra_applications: [
         :absinthe_plug,
+        :bamboo,
         :logger,
         :timex,
         :timex_ecto
@@ -48,6 +49,7 @@ defmodule RemoteDay.Mixfile do
       {:absinthe_ecto, "~> 0.1.0"},
       {:absinthe_plug, "~> 1.4.0"},
       {:absinthe, "~> 1.4.0"},
+      {:bamboo, "~> 1.1"},
       {:bcrypt_elixir, "~> 1.0"},
       {:comeonin, "~> 4.0"},
       {:cors_plug, "~> 2.0"},
@@ -66,6 +68,7 @@ defmodule RemoteDay.Mixfile do
       {:plug_cowboy, "~> 1.0"},
       {:poison, "~> 3.1.0"},
       {:postgrex, ">= 0.0.0"},
+      {:quantum, "~> 2.3"},
       {:timex_ecto, "~> 3.0"},
       {:timex, "~> 3.1"}
     ]
