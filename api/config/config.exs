@@ -34,8 +34,7 @@ end
 config :remote_day, RemoteDay.Scheduler,
   jobs: [
     # Every day at 9:30
-    {"30 9 * * *", {RemoteDay.Jobs.RemoteWorkers, :send_daily_emails, []}},
-    {"* * * * *", {RemoteDay.Jobs.RemoteWorkers, :send_daily_emails, []}}
+    {"30 9 * * *", {RemoteDay.Jobs.RemoteWorkers, :send_daily_emails, []}}
   ]
 
 # Import environment specific config. This must remain at the bottom

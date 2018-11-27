@@ -2,7 +2,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
   @moduledoc """
   Module resolves HomeOffice related queries
   """
-  alias RemoteDay.HomeOffice
+  alias RemoteDay.{HomeOffice, Emails.LateRemoteDay, Mailer}
 
   @default_event_kind "day"
 
@@ -27,6 +27,8 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
         %{context: %{current_user: current_user}}
       ) do
     events = HomeOffice.get_events_by!(date: date, user_id: current_user.id)
+    IO.inspect(events, label: "xxxxxxxxxxxx")
+    IO.inspect(current_user, label: "xxxxxxxaaaaaaa")
 
     case Enum.empty?(events) do
       true ->
@@ -35,6 +37,13 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
 
         case HomeOffice.create_event(attrs) do
           {:ok, event} ->
+            deadline = Timex.today() |> Timex.to_datetime() |> Timex.shift(hours: 9, minutes: 30)
+
+            if event.date == Timex.today() && Timex.diff(deadline, Timex.now()) <= 0 do
+              LateRemoteDay.email(current_user)
+              |> Mailer.deliver_later()
+            end
+
             {:ok, event}
 
           {:error, errors} ->

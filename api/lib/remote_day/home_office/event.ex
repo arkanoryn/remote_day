@@ -44,11 +44,11 @@ defmodule RemoteDay.HomeOffice.Event do
   end
 
   def by_user_id(query, user_id) do
-    from(c in query, where: c.user_id >= ^user_id)
+    from(c in query, where: c.user_id == ^user_id)
   end
 
   def by_kind(query, kind) do
-    from(c in query, where: c.kind >= ^kind)
+    from(c in query, where: c.kind == ^kind)
   end
 
   def with_user(query) do

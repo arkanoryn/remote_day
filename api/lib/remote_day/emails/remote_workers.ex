@@ -3,7 +3,7 @@ defmodule RemoteDay.Emails.RemoteWorkers do
   Modules defining the email sent daily to inform about remote workers of the day
   """
   import Bamboo.Email
-  alias RemoteDay.{Account, HomeOffice}
+  alias RemoteDay.{HomeOffice, Emails.Receivers}
   require Logger
 
   @from "remote@your_office.com"
@@ -20,17 +20,12 @@ defmodule RemoteDay.Emails.RemoteWorkers do
         date = Timex.format!(date, "{0D}-{0M}-{YYYY}")
 
         new_email()
-        |> to(receivers())
+        |> to(Receivers.all())
         |> from(@from)
         |> subject("[#{date}] Remote workers")
         |> text_body(generate_text_body(events))
         |> html_body(generate_html_body(events))
     end
-  end
-
-  defp receivers do
-    Account.list_users()
-    |> Enum.map(& &1.email)
   end
 
   defp generate_text_body(events) do
