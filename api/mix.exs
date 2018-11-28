@@ -56,6 +56,7 @@ defmodule RemoteDay.Mixfile do
       {:cowboy, "~> 1.0"},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:dataloader, "~> 1.0.0"},
+      {:ex_doc, "~> 0.6", only: :docs},
       {:ex_machina, "~> 2.2"},
       {:excoveralls, "~> 0.10", only: :test},
       {:faker, "~> 0.11"},
