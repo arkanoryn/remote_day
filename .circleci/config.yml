@@ -17,6 +17,12 @@ jobs:
       - checkout:
           path: ~/repo
 
+     - run:
+          name: "Install Hex"
+          command: mix local.hex --force
+      - run:
+          name: "Install Rebar"
+          command: mix local.rebar --force
       - run:
           name: "Install Elixir dependencies"
           command: mix deps.get
