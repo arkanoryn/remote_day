@@ -54,14 +54,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
 
         case HomeOffice.create_event(attrs) do
           {:ok, event} ->
-            deadline = Timex.today() |> Timex.to_datetime() |> Timex.shift(hours: 9, minutes: 30)
-
-            if event.date == Timex.today() && Timex.diff(deadline, Timex.now()) <= 0 do
-              current_user
-              |> LateRemoteWorkers.announcement()
-              |> Mailer.deliver_later()
-            end
-
+            send_announcement(event)
             {:ok, event}
 
           {:error, %Ecto.Changeset{} = changeset} ->
@@ -81,4 +74,14 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
     do: create_event(root, Map.put(attrs, :kind, @default_event_kind), info)
 
   defp string_to_date(str), do: str |> Timex.parse!("{YYYY}-{M}-{D}") |> Timex.to_date()
+
+  defp send_announcement(event) do
+    deadline = Timex.today() |> Timex.to_datetime() |> Timex.shift(hours: 9, minutes: 30)
+
+    if event.date == Timex.today() && Timex.diff(deadline, Timex.now()) <= 0 do
+      current_user
+      |> LateRemoteWorkers.announcement()
+      |> Mailer.deliver_later()
+    end
+  end
 end

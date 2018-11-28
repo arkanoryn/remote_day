@@ -17,6 +17,9 @@ jobs:
       - checkout:
           path: ~/repo
 
+      - restore_cache:
+          keys:
+            - elixir-build-v3-{{ checksum "mix.lock" }}
       - run:
           name: "Install Hex"
           command: mix local.hex --force
@@ -41,6 +44,12 @@ jobs:
       - run:
           name: "Run Elixir formatter check"
           command: mix format --check-formatted
+      - save_cache:
+          key: elixir-build-v3-{{ checksum "mix.lock" }}
+          paths:
+            - '_build'
+            - 'deps'
+            - '~/.mix'
 
 workflows:
   version: 2
