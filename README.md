@@ -1,4 +1,6 @@
 # Remote Day <!-- omit in toc -->
+[![CircleCI](https://circleci.com/gh/arkanoryn/remote_day.svg?style=svg)](https://circleci.com/gh/arkanoryn/remote_day)
+
 > Working at an office is cool. Working remotely, from home or the coffee next
 > door is better.
 >
@@ -16,8 +18,6 @@
 > to see what I expect to integrate further._
 >
 > -- @arkanoryn
-
-[![CircleCI](https://circleci.com/gh/arkanoryn/remote_day.svg?style=svg)](https://circleci.com/gh/arkanoryn/remote_day)
 
 ## Table of Content
 * [Status](#status)
