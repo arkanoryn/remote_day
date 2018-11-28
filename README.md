@@ -17,6 +17,8 @@
 >
 > -- @arkanoryn
 
+[![CircleCI](https://circleci.com/gh/arkanoryn/remote_day.svg?style=svg)](https://circleci.com/gh/arkanoryn/remote_day)
+
 ## Table of Content
 * [Status](#status)
 * [Table of Content](#table-of-content)
