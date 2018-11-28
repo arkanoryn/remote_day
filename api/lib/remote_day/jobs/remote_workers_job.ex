@@ -8,7 +8,7 @@ defmodule RemoteDay.Jobs.RemoteWorkers do
 
   def send_daily_emails do
     :today
-    |> Emails.RemoteWorkers.list_remote_workers_email()
+    |> Emails.TodayRemoteWorkers.list()
     |> Mailer.deliver_now()
   end
 end

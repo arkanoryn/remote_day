@@ -2,9 +2,8 @@ defmodule RemoteDay.Account do
   @moduledoc """
   Account context
   """
-  import Comeonin.Bcrypt, only: [check_pass: 2, dummy_checkpw: 0]
 
-  alias RemoteDay.Account.{Guardian, User}
+  alias RemoteDay.Account.{Auth, Guardian, User}
   alias RemoteDay.Repo
 
   ###################################
@@ -73,22 +72,11 @@ defmodule RemoteDay.Account do
           {:ok, User.t(), String.t()} | {:error, atom()}
   def login(email: email, password: pwd) do
     with user <- get_user_by!(email: email),
-         {:ok, user} <- authenticate(user, pwd),
+         {:ok, user} <- Auth.authenticate(user, pwd),
          {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
       {:ok, user, token}
     else
       err -> err
-    end
-  end
-
-  defp authenticate(user, password) do
-    case user do
-      nil ->
-        dummy_checkpw()
-        {:error, :unauthorized}
-
-      _ ->
-        check_pass(user, password)
     end
   end
 end

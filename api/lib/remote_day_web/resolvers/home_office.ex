@@ -3,7 +3,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
   Module resolves HomeOffice related queries
   """
   alias RemoteDay.{
-    Emails.LateRemoteDay,
+    Emails.LateRemoteWorkers,
     HomeOffice,
     Mailer
   }
@@ -43,7 +43,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
 
             if event.date == Timex.today() && Timex.diff(deadline, Timex.now()) <= 0 do
               current_user
-              |> LateRemoteDay.email()
+              |> LateRemoteWorkers.announcement()
               |> Mailer.deliver_later()
             end
 

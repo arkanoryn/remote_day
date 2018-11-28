@@ -1,15 +1,15 @@
-defmodule RemoteDay.Emails.LateRemoteDay do
+defmodule RemoteDay.Emails.LateRemoteWorkers do
   @moduledoc """
   email to late announcement
   """
 
   import Bamboo.Email
-  alias RemoteDay.{Emails.Receivers}
+  alias RemoteDay.{Emails.Receivers, Account.User}
   require Logger
 
   @from "remote@your_office.com"
 
-  def email(user) do
+  def announcement(%User{} = user) do
     date = Timex.format!(Timex.today(), "{0D}-{0M}-{YYYY}")
 
     new_email()

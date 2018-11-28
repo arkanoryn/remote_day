@@ -1,4 +1,4 @@
-defmodule RemoteDay.Emails.RemoteWorkers do
+defmodule RemoteDay.Emails.TodayRemoteWorkers do
   @moduledoc """
   Modules defining the email sent daily to inform about remote workers of the day
   """
@@ -13,10 +13,10 @@ defmodule RemoteDay.Emails.RemoteWorkers do
 
   @from "remote@your_office.com"
 
-  def list_remote_workers_email(date \\ :today)
-  def list_remote_workers_email(:today), do: list_remote_workers_email(Timex.today())
+  def list(date \\ :today)
+  def list(:today), do: list(Timex.today())
 
-  def list_remote_workers_email(date) do
+  def list(date) do
     case HomeOffice.list_events(date, 1) do
       [] ->
         Logger.info("No events today. No email will be sent.")
