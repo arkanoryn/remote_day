@@ -59,7 +59,7 @@ defmodule RemoteDay.Tests.Account.UserTest do
     end
 
     test "with existing id", %{user: user} do
-      fetched_user = Account.get_user!(%{id: user.id})
+      fetched_user = Account.get_user!(user.id)
 
       assert fetched_user == %{user | password: nil, password_confirmation: nil}
     end
@@ -72,16 +72,11 @@ defmodule RemoteDay.Tests.Account.UserTest do
       [user: user]
     end
 
-    test "by email/2", %{user: user} do
-      fetched_user = Account.get_user_by!(:email, user.email)
-
-      assert fetched_user == %{user | password: nil, password_confirmation: nil}
-    end
-
     test "by email/1", %{user: user} do
-      fetched_user = Account.get_user_by!(%{email: user.email})
+      fetched_user = Account.get_user_by!(email: user.email)
 
       assert fetched_user == %{user | password: nil, password_confirmation: nil}
+      assert Account.get_user_by!(email: user.email) == Account.get_user_by!(%{email: user.email})
     end
   end
 
@@ -93,7 +88,10 @@ defmodule RemoteDay.Tests.Account.UserTest do
     end
 
     test "authenticate user with good credentials", %{user: user} do
-      assert {:ok, user, token} = Account.login(%{email: user.email, password: user.password})
+      %{email: email, password: pwd} = user
+
+      assert {:ok, user, token} = Account.login(%{email: email, password: pwd})
+      assert {:ok, user, token} = Account.login(email: email, password: pwd)
     end
 
     test "fails with bad pwd", %{user: user} do

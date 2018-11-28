@@ -30,7 +30,12 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.CreateEventTest do
       args = @required_event_args ++ @optional_event_args
 
       create_event_query =
-        build_query(@operation_type, @operation_name, args, ~w(id kind date user_id))
+        build_query(@operation_type, @operation_name, args, [
+          "id",
+          "kind",
+          "date",
+          {"user", ~w(id)}
+        ])
 
       response =
         conn
@@ -41,7 +46,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.CreateEventTest do
       assert response["id"]
       assert response["kind"] == attrs.kind
       assert response["date"] == attrs.date
-      assert response["user_id"] == user.id
+      assert response["user"]["id"] == Integer.to_string(user.id)
     end
 
     @tag :authenticated
@@ -50,7 +55,12 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.CreateEventTest do
       args = @required_event_args
 
       create_event_query =
-        build_query(@operation_type, @operation_name, args, ~w(id kind user_id))
+        build_query(@operation_type, @operation_name, args, [
+          "id",
+          "kind",
+          "date",
+          {"user", ~w(id)}
+        ])
 
       response =
         conn
@@ -60,7 +70,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.CreateEventTest do
 
       assert response["id"]
       assert response["kind"] == @default_event_kind
-      assert response["user_id"] == user.id
+      assert response["user"]["id"] == Integer.to_string(user.id)
     end
 
     @tag :authenticated
@@ -68,8 +78,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.CreateEventTest do
       attrs = params_for(:event, date: format_date(@past_date))
       args = @required_event_args
 
-      create_event_query =
-        build_query(@operation_type, @operation_name, args, ~w(id kind user_id))
+      create_event_query = build_query(@operation_type, @operation_name, args, ~w(id kind))
 
       response =
         conn
@@ -86,7 +95,12 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.CreateEventTest do
       args = @required_event_args ++ @optional_event_args
 
       create_event_query =
-        build_query(@operation_type, @operation_name, args, ~w(id kind date user_id))
+        build_query(@operation_type, @operation_name, args, [
+          "id",
+          "kind",
+          "date",
+          {"user", ~w(id)}
+        ])
 
       response =
         conn
@@ -97,7 +111,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.CreateEventTest do
       assert response["id"]
       assert response["kind"] == attrs.kind
       assert response["date"] == attrs.date
-      assert response["user_id"] == user.id
+      assert response["user"]["id"] == Integer.to_string(user.id)
 
       second_response =
         conn
@@ -115,7 +129,12 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.CreateEventTest do
       args = @required_event_args
 
       create_event_query =
-        build_query(@operation_type, @operation_name, args, ~w(id kind user_id))
+        build_query(@operation_type, @operation_name, args, [
+          "id",
+          "kind",
+          "date",
+          {"user", ~w(id)}
+        ])
 
       response =
         conn
