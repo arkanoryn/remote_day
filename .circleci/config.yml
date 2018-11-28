@@ -11,6 +11,7 @@ jobs:
 
     environment:
       MIX_ENV: test
+      COVERALLS_REPO_TOKEN: $COVERALLS_REPO_TOKEN
 
     working_directory: ~/repo/api
     steps:
@@ -36,6 +37,8 @@ jobs:
           name: "Create the test database"
           command: mix ecto.create
       - run:
+          environment:
+            COVERALLS_REPO_TOKEN: $COVERALLS_REPO_TOKEN
           name: "Run Elixir test suite (with coveralls)"
           command: mix coveralls
       - run:
