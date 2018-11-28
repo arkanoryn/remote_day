@@ -2,6 +2,7 @@ defmodule RemoteDay.Account do
   @moduledoc """
   Account context
   """
+  require Logger
 
   alias RemoteDay.Account.{Auth, Guardian, User}
   alias RemoteDay.Repo
@@ -76,7 +77,9 @@ defmodule RemoteDay.Account do
          {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
       {:ok, user, token}
     else
-      err -> err
+      err ->
+        Logger.error("unable to authenticate user: #{inspect(err)}")
+        err
     end
   end
 end

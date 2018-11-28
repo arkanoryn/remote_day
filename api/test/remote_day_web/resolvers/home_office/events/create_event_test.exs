@@ -86,7 +86,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice.Events.CreateEventTest do
         |> json_response(200)
         |> parse_errors()
 
-      assert List.first(response)["message"] == "date: can only be today or future date"
+      assert List.first(response)["message"] == "date can only be today or future date"
     end
 
     @tag :authenticated

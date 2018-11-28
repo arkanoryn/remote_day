@@ -62,14 +62,12 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
 
             {:ok, event}
 
-          {:error, errors} ->
-            parsed_errors = Enum.map(errors.errors, fn {key, {msg, _}} -> "#{key}: #{msg}" end)
-
+          {:error, %Ecto.Changeset{} = changeset} ->
             Logger.info(
-              "Resolver.HomeOffice#create_event: An error occured:\n#{inspect(errors)}\n-------\n"
+              "Resolver.HomeOffice#create_event:changerror:\n#{inspect(changeset.errors)}\n-------\n"
             )
 
-            {:error, parsed_errors}
+            {:error, RemoteDayWeb.ErrorHelpers.handle_changeset_errors(changeset.errors)}
         end
 
       false ->

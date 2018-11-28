@@ -20,6 +20,7 @@ defmodule RemoteDay.Emails.TodayRemoteWorkers do
     case HomeOffice.list_events(date, 1) do
       [] ->
         Logger.info("No events today. No email will be sent.")
+        {:no_event}
 
       events ->
         date = Timex.format!(date, "{0D}-{0M}-{YYYY}")

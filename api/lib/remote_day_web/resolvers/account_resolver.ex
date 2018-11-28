@@ -19,9 +19,10 @@ defmodule RemoteDayWeb.Resolvers.Account do
       Logger.info("Resolver.Account#create_user: success")
       {:ok, %{user: user, token: token}}
     else
-      err ->
-        Logger.info("Resolver.Account#create_user: failure.\n#{inspect(err)}\n-----\n")
-        {:error, "An error occured"}
+      {:error, %Ecto.Changeset{} = changeset} ->
+        Logger.info("Resolver.Account#create_user:changeset_err\n#{inspect(changeset.errors)}")
+
+        {:error, RemoteDayWeb.ErrorHelpers.handle_changeset_errors(changeset.errors)}
     end
   end
 
@@ -34,7 +35,7 @@ defmodule RemoteDayWeb.Resolvers.Account do
         {:ok, %{user: user, token: token}}
 
       {:error, error} ->
-        Logger.info("Resolver.Account#authenticate: an error occured.\n\n#{error}")
+        Logger.info("Resolver.Account#authenticate: err.\n\n#{error}")
         {:error, "invalid credentials"}
     end
   end
