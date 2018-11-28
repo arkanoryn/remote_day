@@ -6,6 +6,25 @@ defmodule RemoteDay.HomeOffice do
   alias RemoteDay.HomeOffice.Event
   alias RemoteDay.Repo
 
+  ###################################
+  ###################################
+  ##                               ##
+  ##      ABSINTHE DATALOADER      ##
+  ##                               ##
+  ###################################
+  ###################################
+  def data(params), do: Dataloader.Ecto.new(Repo, query: &query/2, default_params: params)
+
+  def query(query, _args), do: query
+
+  ###################################
+  ###################################
+  ##                               ##
+  ##              EVENTS           ##
+  ##                               ##
+  ###################################
+  ###################################
+
   @doc """
   Returns the list of events.
 
@@ -13,6 +32,7 @@ defmodule RemoteDay.HomeOffice do
     iex> list_events()
     [%Event{}, ...]
   """
+  @spec list_events :: [Event.t()]
   def list_events do
     Repo.all(Event)
   end
@@ -22,6 +42,7 @@ defmodule RemoteDay.HomeOffice do
   If `limit = 0`, it will return the list of events from today up to the last event.
   If `starting_date = :today`, starting_date will be replace by the date of today.
   """
+  @spec list_events(:today | Timex.Date.t(), non_neg_integer()) :: [Event] | no_return
   def list_events(starting_date, limit \\ 0)
   def list_events(:today, limit), do: list_events(Timex.today(), limit)
 
@@ -44,6 +65,7 @@ defmodule RemoteDay.HomeOffice do
   @doc """
   Creates an Event with provided attrs and returns the newly created Event.
   """
+  @spec create_event(map()) :: Event.t()
   def create_event(%{} = attrs) do
     %Event{}
     |> Event.changeset(attrs)
@@ -53,12 +75,14 @@ defmodule RemoteDay.HomeOffice do
   @doc """
   Updates provided Event with provided attrs and returns the newly created Event.
   """
+  @spec update_event(Event.t(), map()) :: Event.t()
   def update_event(%Event{} = event, attrs) do
     event
     |> Event.changeset(attrs)
     |> Repo.update()
   end
 
+  @spec get_events_by!([...]) :: [Event.t()]
   def get_events_by!(opts \\ []) do
     Event
     |> (fn q -> if opts[:date], do: Event.by_date(q, opts[:date]), else: q end).()
@@ -70,10 +94,12 @@ defmodule RemoteDay.HomeOffice do
   @doc """
   Deletes provided Event and returns the last value of the Event.
   """
+  @spec delete_event(Event.t()) :: {:ok, Event.t()} | {:error, Ecto.Changeset.t()}
   def delete_event(%Event{} = event) do
     Repo.delete(event)
   end
 
+  @spec delete_event(pos_integer()) :: {:ok, Event.t()} | {:error, Ecto.Changeset.t()}
   def delete_event(id) when is_integer(id) do
     Event
     |> Repo.get!(id)

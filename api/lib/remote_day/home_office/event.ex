@@ -14,6 +14,12 @@ defmodule RemoteDay.HomeOffice.Event do
 
   alias RemoteDay.Account.User
 
+  @type t :: %__MODULE__{
+          date: Timex.Ecto.Date.t(),
+          kind: String.t(),
+          user: User.t()
+        }
+
   schema "events" do
     field(:date, Timex.Ecto.Date)
     field(:kind, :string, default: "day")
@@ -22,8 +28,8 @@ defmodule RemoteDay.HomeOffice.Event do
     timestamps()
   end
 
-  @doc false
-  def changeset(event, %{} = attrs) do
+  @spec changeset(__MODULE__.t(), map()) :: Ecto.Changeset.t()
+  def changeset(%__MODULE__{} = event, %{} = attrs \\ :empty) do
     event
     |> cast(attrs, ~w(user_id date kind)a)
     |> validate_required(~w(user_id date kind)a)
@@ -31,26 +37,32 @@ defmodule RemoteDay.HomeOffice.Event do
     |> foreign_key_constraint(:user_id)
   end
 
+  @spec between_dates(Ecto.Query.t(), Timex.Date.t(), Timex.Date.t()) :: Ecto.Query.t()
   def between_dates(query, starting_date, end_date) do
     from(c in query, where: c.date >= ^starting_date, where: c.date < ^end_date)
   end
 
+  @spec by_date(Ecto.Query.t(), Timex.Date.t()) :: Ecto.Query.t()
   def by_date(query, date) do
     from(c in query, where: c.date == ^date)
   end
 
+  @spec from_date(Ecto.Query.t(), Timex.Date.t()) :: Ecto.Query.t()
   def from_date(query, starting_date) do
     from(c in query, where: c.date >= ^starting_date)
   end
 
+  @spec by_user_id(Ecto.Query.t(), integer()) :: Ecto.Query.t()
   def by_user_id(query, user_id) do
     from(e in query, join: u in assoc(e, :user), where: u.id == ^user_id)
   end
 
+  @spec by_kind(Ecto.Query.t(), String.t()) :: Ecto.Query.t()
   def by_kind(query, kind) do
     from(c in query, where: c.kind == ^kind)
   end
 
+  @spec with_user(Ecto.Query.t()) :: Ecto.Query.t()
   def with_user(query) do
     from(c in query, preload: [:user])
   end
