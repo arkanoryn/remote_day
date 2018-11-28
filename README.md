@@ -5,9 +5,9 @@
 > Working at an office is cool. Working remotely, from home or the coffee next
 > door is better.
 >
-> Every day, people that would work remotely today, tomorrow or late this week
-> send emails informing they will be working remotely. And every day, I would
-> forget would is supposed to work remotely today, or is just coming late.
+> Every day, people that would work remotely today, tomorrow or later this week
+> send emails informing they will be working remotely. And every day, I
+> forget who is supposed to work remotely today, or is just coming late.
 >
 > What if there was a better way? ;)
 
