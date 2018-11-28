@@ -1,0 +1,37 @@
+# Elixir CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-elixir/ for more details
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version here
+      - image: circleci/elixir:1.7.4
+      - image: circleci/postgres:10.3
+
+    environment:
+      MIX_ENV: test
+
+    working_directory: ~/repo/api
+    steps:
+      - checkout:
+        path: ~/repo
+
+      - run:
+          name: "Install Elixir dependencies"
+          command: mix deps.get
+      - run:
+          name: "Compile Elixir source"
+          command: mix compile
+      - run:
+          name: "Create the test database"
+          command: mix ecto.create
+      - run:
+          name: "Run Elixir test suite (with coveralls)"
+          command: mix coveralls
+      - run:
+          name: "Run Elixir linting"
+          command: mix credo
+      - run:
+          name: "Run Elixir formatter check"
+          command: mix format --check-formatted
