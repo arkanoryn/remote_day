@@ -5,6 +5,7 @@ defmodule RemoteDayWeb.Resolvers.Account do
   require Logger
 
   alias RemoteDay.Account
+  alias RemoteDayWeb.ErrorHelpers
 
   def create_user(
         _root,

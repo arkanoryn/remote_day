@@ -52,9 +52,9 @@
 * [Author](#author)
 
 ## Getting started
-> The application is separated in two. The `api` folder is an Elixir/Phoenix/Absinthe backend server while the `webapp` is a React-Redux app created with the create-react-app boilerplate.
+> The application is separated into two. The `api` folder is an Elixir/Phoenix/Absinthe backend server while the `webapp` is a React-Redux app created with the create-react-app boilerplate.
 >
-> Both application are docker containers. It is therefore possible to develop using only [Docker](https://www.docker.com/get-started).
+> Both applications are docker containers. It is, therefore, possible to develop using only [Docker](https://www.docker.com/get-started).
 
 ### Requirements
 #### Containers
@@ -99,7 +99,7 @@ Guardian requires a secret key: `GUARDIAN_SECRET_KEY`
 #### Mailer / Bamboo
 Currently uses [`Bamboo.LocalAdapter`](https://github.com/thoughtbot/bamboo#adapters) and [`Bamboo.TestAdapter`](https://github.com/thoughtbot/bamboo#testing).
 
-The `LocalAdapter` allows to access a testing inbox. the inbox can be reach via: [http://localhost:4000/sent_emails](http://localhost:4000/sent_emails)
+The `LocalAdapter` allows accessing a testing inbox. The inbox can be reached via: [http://localhost:4000/sent_emails](http://localhost:4000/sent_emails)
 
 #### Phoenix
 Phoenix requires an endpoint secret key: `ENDPOINT_SECRET_KEY`
@@ -113,7 +113,7 @@ $> docker-compose up api-dev    # will start the api-dev container only (and dep
 $> docker-compose up react-dev  # will start the react-dev container only
 $> docker-compose logs SERVICE  # displays the logs of SERVICE (see [./docker-compose-yml](./docker-compose-yml) for services' name) [$> docker-compose logs -h to list the flags]
 
-$> # to run the tests suit and the coverage for the backend
+$> # to run the tests suite and the coverage for the backend
 $> docker-compose run -e "MIX_ENV=test" api-dev mix coveralls
 ```
 
@@ -124,21 +124,21 @@ $> docker-compose run -e "MIX_ENV=test" api-dev mix coveralls
 * The web application is accessible via: [http://localhost:3337/](http://localhost:3337/)
 
 ### Env variables
-> In React, the environment variable are accessible under the app via `process.env` and should be prefixed with `REACT_APP_`.
+> In React, the environment variables are accessible under the app via `process.env` and should be prefixed with `REACT_APP_`.
 >
 > In Elixir you need to use `System.get_env("VAR_NAME")`.
 
 ## Tests
 ### Elixir
 #### TDD
-As much as possible, I try to work using TDD, keeping the test suit up-to-date and an acceptable
+As much as possible, I try to work using TDD, keeping the test suite up-to-date and acceptable
 coverage.
 
-> _During development, it is really time consuming to start the docker-container again and again
-> in order to run the tests suit._
+> _During development, it is really time-consuming to start the docker-container again and again
+> in order to run the tests suite._
 >
 > _I therefore decided to add the `test.watch` dependency in order to run my elixir-tests every time
-> a file changes. Please note that you would therefore need to add the env' variables from docker
+> a file changes. Please note that you would need to add the env' variables from docker
 > in your env. This solution unfortunately does not work with docker._
 ```shell
 $> cd api
@@ -153,16 +153,16 @@ $> cp .env.example .env
 $> # add variables from .env to your shell env
 $> source .env
 
-$> # create the database, if it is not already setup
+$> # create the database, if it is not already set up
 $> MIX_ENV=test mix ecto.create
 $> mix test.watch --stale
 ```
 
 #### Code syntax
-> _The code syntax needs to match the official formatter one. I can only advise to install an
-> autoformatter to your IDE/editor if it is not already the case._
+> _The code syntax needs to match the official formatter one. I can only advise installing an
+> auto-formatter to your IDE/editor if it is not already the case._
 
-The code syntax is check by [Hound](https://houndci.com/) on each pull-request.
+The code syntax is checked by [Hound](https://houndci.com/) on each pull-request.
 
 #### CI
 > To determine/configure
@@ -185,7 +185,7 @@ The code syntax is check by [Hound](https://houndci.com/) on each pull-request.
 >
 > _... yeah, before all the changes_
 
-The code syntax is check by [Hound](https://houndci.com/) on each pull-request.
+The code syntax is checked by [Hound](https://houndci.com/) on each pull-request.
 
 #### CI
 > To determine/configure

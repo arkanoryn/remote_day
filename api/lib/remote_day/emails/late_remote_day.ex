@@ -4,7 +4,12 @@ defmodule RemoteDay.Emails.LateRemoteWorkers do
   """
 
   import Bamboo.Email
-  alias RemoteDay.{Emails.Receivers, Account.User}
+
+  alias RemoteDay.{
+    Account.User,
+    Emails.Receivers
+  }
+
   require Logger
 
   @from "remote@your_office.com"

@@ -11,6 +11,8 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
     Mailer
   }
 
+  alias RemoteDayWeb.ErrorHelpers
+
   @default_event_kind "day"
 
   @spec all_events(any, %{starting_date: Timex.Date.t() | :today, limit: pos_integer}, any) :: [
@@ -67,7 +69,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
               "Resolver.HomeOffice#create_event:changerror:\n#{inspect(changeset.errors)}\n-------\n"
             )
 
-            {:error, RemoteDayWeb.ErrorHelpers.handle_changeset_errors(changeset.errors)}
+            {:error, ErrorHelpers.handle_changeset_errors(changeset.errors)}
         end
 
       false ->

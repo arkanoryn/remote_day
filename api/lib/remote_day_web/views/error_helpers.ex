@@ -32,7 +32,8 @@ defmodule RemoteDayWeb.ErrorHelpers do
   end
 
   def handle_changeset_errors(errors) do
-    Enum.map(errors, fn {field, detail} ->
+    errors
+    |> Enum.map(fn {field, detail} ->
       "#{field} " <> render_detail(detail)
     end)
     |> Enum.join()
