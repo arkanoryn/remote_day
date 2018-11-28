@@ -18,6 +18,9 @@ jobs:
           path: ~/repo
 
       - run:
+          name: "Install Hex"
+          command: mix local.hex --force
+      - run:
           name: "Install Elixir dependencies"
           command: mix deps.get
       - run:
