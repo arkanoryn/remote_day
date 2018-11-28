@@ -61,6 +61,7 @@ defmodule RemoteDay.Mixfile do
       {:faker, "~> 0.11"},
       {:gettext, "~> 0.11"},
       {:guardian, "~> 1.0"},
+      {:inch_ex, only: :docs},
       {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
       {:phoenix_ecto, "~> 3.2"},
       {:phoenix_pubsub, "~> 1.0"},
