@@ -1,0 +1,17 @@
+{
+  "skip_files": [
+    "lib/remote_day.ex",
+    "lib/remote_day/application.ex",
+    "lib/remote_day/mailer.ex",
+    "lib/remote_day/repo.ex",
+    "lib/remote_day_web.ex",
+    "lib/remote_day_web/channels/user_socket.ex",
+    "lib/remote_day_web/endpoint.ex",
+    "lib/remote_day_web/gettext.ex",
+    "lib/remote_day_web/schemas/types/",
+    "lib/remote_day_web/router.ex",
+    "lib/scheduler.ex",
+    "test/factories/",
+    "test/support/channel_case.ex"
+  ]
+}

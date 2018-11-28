@@ -22,8 +22,7 @@ defmodule RemoteDayWeb.Resolvers.Account do
     else
       {:error, %Ecto.Changeset{} = changeset} ->
         Logger.info("Resolver.Account#create_user:changeset_err\n#{inspect(changeset.errors)}")
-
-        {:error, RemoteDayWeb.ErrorHelpers.handle_changeset_errors(changeset.errors)}
+        {:error, ErrorHelpers.handle_changeset_errors(changeset.errors)}
     end
   end
 

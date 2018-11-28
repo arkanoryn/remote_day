@@ -54,7 +54,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
 
         case HomeOffice.create_event(attrs) do
           {:ok, event} ->
-            send_announcement(event)
+            send_announcement(current_user, event)
             {:ok, event}
 
           {:error, %Ecto.Changeset{} = changeset} ->
@@ -75,7 +75,7 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
 
   defp string_to_date(str), do: str |> Timex.parse!("{YYYY}-{M}-{D}") |> Timex.to_date()
 
-  defp send_announcement(event) do
+  defp send_announcement(current_user, event) do
     deadline = Timex.today() |> Timex.to_datetime() |> Timex.shift(hours: 9, minutes: 30)
 
     if event.date == Timex.today() && Timex.diff(deadline, Timex.now()) <= 0 do

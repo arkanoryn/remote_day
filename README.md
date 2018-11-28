@@ -1,5 +1,6 @@
 # Remote Day <!-- omit in toc -->
 [![CircleCI](https://circleci.com/gh/arkanoryn/remote_day.svg?style=svg)](https://circleci.com/gh/arkanoryn/remote_day)
+[![Coverage Status](https://coveralls.io/repos/github/arkanoryn/remote_day/badge.svg?branch=master)](https://coveralls.io/github/arkanoryn/remote_day?branch=master)
 
 > Working at an office is cool. Working remotely, from home or the coffee next
 > door is better.
