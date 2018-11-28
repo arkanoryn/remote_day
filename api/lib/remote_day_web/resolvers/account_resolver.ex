@@ -12,12 +12,22 @@ defmodule RemoteDayWeb.Resolvers.Account do
           attrs,
         _info
       ) do
-    Account.create_user(attrs)
-    {:ok, user, token} = Account.login(%{email: email, password: pwd})
-    {:ok, %{user: user, token: token}}
+    Logger.info("Resolver.Account#create_user: begin")
+
+    with {:ok, _user} <- Account.create_user(attrs),
+         {:ok, user, token} <- Account.login(%{email: email, password: pwd}) do
+      Logger.info("Resolver.Account#create_user: success")
+      {:ok, %{user: user, token: token}}
+    else
+      err ->
+        Logger.info("Resolver.Account#create_user: failure.\n#{inspect(err)}\n-----\n")
+        {:error, "An error occured"}
+    end
   end
 
   def authenticate(_root, %{email: _email, password: _password} = attrs, _info) do
+    Logger.info("Resolver.Account#authenticate: begin")
+
     case Account.login(attrs) do
       {:ok, user, token} ->
         Logger.info("Resolver.Account#authenticate: user [#{user.id}] successfully authenticated")

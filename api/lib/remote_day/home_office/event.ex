@@ -36,7 +36,7 @@ defmodule RemoteDay.HomeOffice.Event do
   end
 
   def by_date(query, date) do
-    from(c in query, where: c.date >= ^date)
+    from(c in query, where: c.date == ^date)
   end
 
   def from_date(query, starting_date) do
@@ -44,7 +44,7 @@ defmodule RemoteDay.HomeOffice.Event do
   end
 
   def by_user_id(query, user_id) do
-    from(c in query, where: c.user_id == ^user_id)
+    from(e in query, join: u in assoc(e, :user), where: u.id == ^user_id)
   end
 
   def by_kind(query, kind) do
