@@ -4,6 +4,7 @@ import { Button, Col, Dropdown, Menu, notification, Row } from 'antd';
 import { compose, withHandlers } from 'recompose';
 import { graphql } from 'react-apollo';
 import moment from 'moment';
+import { filter } from 'lodash';
 
 import { eventsOperations } from '../../apollo_operations';
 import { AuthenticatedLayout } from '../../root';
@@ -47,7 +48,11 @@ const handleSubmit = ({
       })
       .catch((e) => {
         fetchEventsFailure(e);
-        notification.error({ message: `An error occured. :( ${e}` });
+        if (filter(e.graphQLErrors, (x) => { return (x.message === 'A user can only create one event per day'); })) {
+          notification.warning({ message: 'You are already marked as remote worker for this date.' });
+        } else {
+          notification.error({ message: 'An error occured. :(' });
+        }
         return false;
       });
   };

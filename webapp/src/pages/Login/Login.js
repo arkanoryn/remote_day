@@ -48,7 +48,11 @@ const handleSubmit = (
       })
       .catch((e) => {
         authenticationFailure(e);
-        notification.error({ message: 'An error occured. :(' });
+        if (e.message === 'invalid credentials') {
+          notification.error({ message: 'invalid credentials' });
+        } else {
+          notification.error({ message: 'An error occured. :(' });
+        }
         return false;
       });
   };
