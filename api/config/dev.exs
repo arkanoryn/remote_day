@@ -47,3 +47,5 @@ config :remote_day, RemoteDay.Repo,
 
 # config Mailer
 config :remote_day, RemoteDay.Mailer, adapter: Bamboo.LocalAdapter
+
+config :mix_test_watch, clear: true

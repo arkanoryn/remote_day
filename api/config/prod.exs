@@ -21,6 +21,12 @@ config :remote_day, RemoteDayWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :remote_day, RemoteDay.Scheduler,
+  jobs: [
+    # Every day at 9:30
+    {"30 9 * * *", {RemoteDay.Jobs.RemoteWorkers, :send_daily_emails, []}}
+  ]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
