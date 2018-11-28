@@ -26,17 +26,6 @@ config :remote_day, RemoteDay.Account.Guardian,
   issuer: "remote_day",
   secret_key: System.get_env("GUARDIAN_SECRET_KEY")
 
-if Mix.env() == :dev do
-  config :mix_test_watch,
-    clear: true
-end
-
-config :remote_day, RemoteDay.Scheduler,
-  jobs: [
-    # Every day at 9:30
-    {"30 9 * * *", {RemoteDay.Jobs.RemoteWorkers, :send_daily_emails, []}}
-  ]
-
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

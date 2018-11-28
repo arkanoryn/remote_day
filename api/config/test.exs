@@ -17,3 +17,5 @@ config :remote_day, RemoteDay.Repo,
   hostname: System.get_env("DB_ENV_POSTGRES_HOST") || "localhost",
   database: "remote_day_test",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :remote_day, RemoteDay.Mailer, adapter: Bamboo.TestAdapter

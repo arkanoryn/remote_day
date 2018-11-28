@@ -3,7 +3,7 @@ defmodule RemoteDayWeb.Schema do
 
   use Absinthe.Schema
 
-  alias RemoteDay.Account
+  alias RemoteDay.{Account, HomeOffice}
   alias RemoteDayWeb.Schema.Types.{Events, Users}
 
   def context(ctx), do: Map.put(ctx, :loader, loader(ctx))
@@ -38,7 +38,8 @@ defmodule RemoteDayWeb.Schema do
 
   defp sources do
     [
-      Account
+      Account,
+      HomeOffice
     ]
   end
 end

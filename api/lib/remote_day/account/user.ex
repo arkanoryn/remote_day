@@ -18,6 +18,13 @@ defmodule RemoteDay.Account.User do
 
   @required_fields ~w(username password password_confirmation email)a
 
+  @type t :: %__MODULE__{
+          username: String.t(),
+          email: String.t(),
+          password_hash: String.t(),
+          events: [Event.t()]
+        }
+
   schema "users" do
     field(:username, :string)
     field(:email, :string)
@@ -30,6 +37,7 @@ defmodule RemoteDay.Account.User do
     timestamps()
   end
 
+  @spec changeset(__MODULE__.t(), map()) :: Ecto.Changeset.t()
   def changeset(%__MODULE__{} = model, attrs \\ :empty) do
     model
     |> cast(attrs, @required_fields)

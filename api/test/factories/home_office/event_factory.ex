@@ -9,7 +9,7 @@ defmodule RemoteDay.Factory.HomeOffice.Event do
     quote do
       def event_factory do
         %Event{
-          user_id: 42,
+          user: build(:user),
           date: Timex.today(),
           kind: "day"
         }

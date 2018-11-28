@@ -10,7 +10,7 @@ defmodule RemoteDay.Repo.Migrations.AddUsersTable do
       timestamps()
     end
 
-    create(index(:users, :email))
+    create(unique_index(:users, :email))
     create(index(:users, :username))
   end
 end

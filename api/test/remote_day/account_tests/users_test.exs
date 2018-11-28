@@ -2,9 +2,10 @@ defmodule RemoteDay.Tests.Account.UserTest do
   @moduledoc """
   Module describing the tests of the User from Account
   """
-  use RemoteDay.DataCase
+  use RemoteDay.DataCase, async: false
 
   import Comeonin.Bcrypt, only: [checkpw: 2]
+  import ExUnit.CaptureLog
   import RemoteDay.Factory
 
   alias RemoteDay.Account
@@ -59,7 +60,7 @@ defmodule RemoteDay.Tests.Account.UserTest do
     end
 
     test "with existing id", %{user: user} do
-      fetched_user = Account.get_user!(%{id: user.id})
+      fetched_user = Account.get_user!(user.id)
 
       assert fetched_user == %{user | password: nil, password_confirmation: nil}
     end
@@ -72,16 +73,11 @@ defmodule RemoteDay.Tests.Account.UserTest do
       [user: user]
     end
 
-    test "by email/2", %{user: user} do
-      fetched_user = Account.get_user_by!(:email, user.email)
-
-      assert fetched_user == %{user | password: nil, password_confirmation: nil}
-    end
-
     test "by email/1", %{user: user} do
-      fetched_user = Account.get_user_by!(%{email: user.email})
+      fetched_user = Account.get_user_by!(email: user.email)
 
       assert fetched_user == %{user | password: nil, password_confirmation: nil}
+      assert Account.get_user_by!(email: user.email) == Account.get_user_by!(%{email: user.email})
     end
   end
 
@@ -93,17 +89,32 @@ defmodule RemoteDay.Tests.Account.UserTest do
     end
 
     test "authenticate user with good credentials", %{user: user} do
-      assert {:ok, user, token} = Account.login(%{email: user.email, password: user.password})
+      %{email: email, password: pwd, id: id} = user
+
+      assert {:ok, %User{id: ^id}, token} = Account.login(%{email: email, password: pwd})
+      assert {:ok, %User{id: ^id}, token} = Account.login(email: email, password: pwd)
     end
 
     test "fails with bad pwd", %{user: user} do
-      assert {:error, "invalid password"} =
-               Account.login(%{email: user.email, password: "wrong password"})
+      err = "invalid password"
+      assert {:error, ^err} = Account.login(%{email: user.email, password: "wrong password"})
+
+      logs =
+        capture_log(fn -> Account.login(%{email: user.email, password: "wrong password"}) end)
+
+      assert logs =~ "unable to authenticate user:"
+      assert logs =~ err
     end
 
     test "fails with bad email" do
       assert {:error, :unauthorized} =
                Account.login(%{email: "user.email", password: "wrong password"})
+
+      logs =
+        capture_log(fn -> Account.login(%{email: "user.email", password: "wrong password"}) end)
+
+      assert logs =~ "unable to authenticate user:"
+      assert logs =~ "unauthorized"
     end
   end
 end

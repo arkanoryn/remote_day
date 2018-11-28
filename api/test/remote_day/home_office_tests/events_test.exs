@@ -17,7 +17,7 @@ defmodule RemoteDay.Tests.HomeOffice.EventsTest do
       event = insert(:event)
       events = HomeOffice.list_events()
 
-      assert Enum.member?(events, event)
+      assert Enum.any?(events, &(&1.id == event.id))
     end
   end
 
@@ -41,8 +41,9 @@ defmodule RemoteDay.Tests.HomeOffice.EventsTest do
     } do
       events = HomeOffice.list_events(:today)
 
-      assert Enum.member?(events, today_event) && Enum.member?(events, tomorrow_event)
-      refute Enum.member?(events, yesterday_event)
+      assert Enum.any?(events, &(&1.id == today_event.id))
+      assert Enum.any?(events, &(&1.id == tomorrow_event.id))
+      refute Enum.any?(events, &(&1.id == yesterday_event.id))
     end
 
     test "returns events after today (including today's event) up to 2 days (not included), and not after",
@@ -57,10 +58,11 @@ defmodule RemoteDay.Tests.HomeOffice.EventsTest do
 
       events = HomeOffice.list_events(:today, 2)
 
-      assert Enum.member?(events, today_event) && Enum.member?(events, in_limit_event)
-
-      refute Enum.member?(events, yesterday_event) && Enum.member?(events, next_week_event) &&
-               Enum.member?(events, out_limit_event)
+      assert Enum.any?(events, &(&1.id == today_event.id))
+      assert Enum.any?(events, &(&1.id == in_limit_event.id))
+      refute Enum.any?(events, &(&1.id == yesterday_event.id))
+      refute Enum.any?(events, &(&1.id == next_week_event.id))
+      refute Enum.any?(events, &(&1.id == out_limit_event.id))
     end
 
     test "returns events after starting_date (including starting_date's event) up to 2 days (not included), and not after",
@@ -73,10 +75,11 @@ defmodule RemoteDay.Tests.HomeOffice.EventsTest do
 
       events = HomeOffice.list_events(starting_date, 2)
 
-      assert Enum.member?(events, first_event) && Enum.member?(events, in_limit_event)
-
-      refute Enum.member?(events, today_event) && Enum.member?(events, next_week_event) &&
-               Enum.member?(events, out_limit_event)
+      assert Enum.any?(events, &(&1.id == first_event.id))
+      assert Enum.any?(events, &(&1.id == in_limit_event.id))
+      refute Enum.any?(events, &(&1.id == today_event.id))
+      refute Enum.any?(events, &(&1.id == next_week_event.id))
+      refute Enum.any?(events, &(&1.id == out_limit_event.id))
     end
 
     test "returns events after starting_date (starting_date included)", %{
@@ -87,16 +90,18 @@ defmodule RemoteDay.Tests.HomeOffice.EventsTest do
       in_event = insert(:event, %{date: starting_date})
       next_week_event = insert(:event, %{date: Timex.add(starting_date, Duration.from_days(7))})
 
-      events = HomeOffice.list_events(:today)
+      events = HomeOffice.list_events(starting_date)
 
-      assert Enum.member?(events, in_event) && Enum.member?(events, next_week_event)
-      refute Enum.member?(events, today_event) && Enum.member?(events, yesterday_event)
+      assert Enum.any?(events, &(&1.id == in_event.id))
+      assert Enum.any?(events, &(&1.id == next_week_event.id))
+      refute Enum.any?(events, &(&1.id == today_event.id))
+      refute Enum.any?(events, &(&1.id == yesterday_event.id))
     end
   end
 
   describe "create_event/1" do
     test "with valid attrs" do
-      attrs = params_for(:event)
+      attrs = params_with_assocs(:event)
 
       assert {:ok, %Event{} = event} = HomeOffice.create_event(attrs)
       assert event.kind == attrs.kind
@@ -120,7 +125,7 @@ defmodule RemoteDay.Tests.HomeOffice.EventsTest do
     end
 
     test "date must be >= today" do
-      attrs = %{params_for(:event) | date: @past_date}
+      attrs = %{params_with_assocs(:event) | date: @past_date}
 
       assert {:error, changeset} = HomeOffice.create_event(attrs)
       assert "can only be today or future date" in errors_on(changeset).date
@@ -128,7 +133,7 @@ defmodule RemoteDay.Tests.HomeOffice.EventsTest do
 
     @tag skip: "kind selector as not been determined yet"
     test "kind must be one of the predetermined value" do
-      attrs = params_for(:event)
+      attrs = params_with_assocs(:event)
 
       assert {:ok, _} = HomeOffice.create_event(%{attrs | kind: "other"})
       assert {:error, _} = HomeOffice.create_event(%{attrs | kind: "invalid"})
@@ -150,7 +155,7 @@ defmodule RemoteDay.Tests.HomeOffice.EventsTest do
     end
 
     test "date must be >= today", %{event: event} do
-      attrs = %{params_for(:event) | date: @past_date}
+      attrs = %{params_with_assocs(:event) | date: @past_date}
 
       assert {:error, changeset} = HomeOffice.update_event(event, attrs)
       assert "can only be today or future date" in errors_on(changeset).date
@@ -183,7 +188,7 @@ defmodule RemoteDay.Tests.HomeOffice.EventsTest do
       event = List.first(future)
 
       assert events = HomeOffice.get_events_by!(date: event.date)
-      assert Enum.member?(events, event)
+      assert Enum.any?(events, &(&1.id == event.id))
     end
 
     test "date and user_id should return list of events at given date and user_id", %{
@@ -192,7 +197,7 @@ defmodule RemoteDay.Tests.HomeOffice.EventsTest do
       event = List.first(future)
 
       assert events = HomeOffice.get_events_by!(date: event.date, user_id: event.user_id)
-      assert Enum.member?(events, event)
+      assert Enum.any?(events, &(&1.id == event.id))
     end
 
     test "date and kind should return list of events at given date and kind", %{
@@ -201,7 +206,7 @@ defmodule RemoteDay.Tests.HomeOffice.EventsTest do
       event = List.first(future)
 
       assert events = HomeOffice.get_events_by!(date: event.date, kind: event.kind)
-      assert Enum.member?(events, event)
+      assert Enum.any?(events, &(&1.id == event.id))
     end
   end
 

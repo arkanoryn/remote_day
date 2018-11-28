@@ -6,6 +6,7 @@
 
 # Generated on crash by the VM
 erl_crash.dump
+.env
 
 # The config/prod.secret.exs file by default contains sensitive
 # data and you should not commit it into version control.
@@ -14,3 +15,5 @@ erl_crash.dump
 # secrets file as long as you replace its contents by environment
 # variables.
 /config/prod.secret.exs
+
+/cover

@@ -56,11 +56,13 @@ defmodule RemoteDay.Mixfile do
       {:cowboy, "~> 1.0"},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:dataloader, "~> 1.0.0"},
+      {:ex_doc, "~> 0.6", only: :docs},
       {:ex_machina, "~> 2.2"},
       {:excoveralls, "~> 0.10", only: :test},
       {:faker, "~> 0.11"},
       {:gettext, "~> 0.11"},
       {:guardian, "~> 1.0"},
+      {:inch_ex, only: :docs},
       {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
       {:phoenix_ecto, "~> 3.2"},
       {:phoenix_pubsub, "~> 1.0"},
@@ -84,7 +86,6 @@ defmodule RemoteDay.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test.watch": ["test.watch --stale"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
