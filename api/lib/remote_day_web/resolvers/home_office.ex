@@ -2,15 +2,24 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
   @moduledoc """
   Module resolves HomeOffice related queries
   """
+  require Logger
+
   alias RemoteDay.{
     Emails.LateRemoteWorkers,
     HomeOffice,
+    HomeOffice.Event,
     Mailer
   }
 
   @default_event_kind "day"
 
+  @spec all_events(any, %{starting_date: Timex.Date.t() | :today, limit: pos_integer}, any) :: [
+          Event.t()
+        ]
+  @spec all_events(any, %{starting_date: Timex.Date.t() | :today}, any) :: [Event.t()]
   def all_events(_root, %{starting_date: starting_date, limit: limit}, _info) do
+    Logger.info("Resolver.HomeOffice#all_events: begin")
+
     starting_date =
       case starting_date do
         "today" -> :today
@@ -25,11 +34,15 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
   def all_events(root, %{starting_date: starting_date}, info),
     do: all_events(root, %{starting_date: starting_date, limit: 0}, info)
 
+  @spec create_event(any, %{date: Timex.Date.t()}, any) :: {:ok, Event.t()} | {:error, String.t()}
+  @spec create_event(any, %{date: Timex.Date.t(), kind: String.t()}, any) ::
+          {:ok, Event.t()} | {:error, String.t()}
   def create_event(
         _root,
         %{date: date, kind: _k} = attrs,
         %{context: %{current_user: current_user}}
       ) do
+    Logger.info("Resolver.HomeOffice#create_event: begin")
     events = HomeOffice.get_events_by!(date: date, user_id: current_user.id)
 
     case Enum.empty?(events) do
@@ -51,6 +64,11 @@ defmodule RemoteDayWeb.Resolvers.HomeOffice do
 
           {:error, errors} ->
             parsed_errors = Enum.map(errors.errors, fn {key, {msg, _}} -> "#{key}: #{msg}" end)
+
+            Logger.info(
+              "Resolver.HomeOffice#create_event: An error occured:\n#{inspect(errors)}\n-------\n"
+            )
+
             {:error, parsed_errors}
         end
 
