@@ -12,29 +12,32 @@ jobs:
     environment:
       MIX_ENV: test
 
-    working_directory: ~/repo/api
+    working_directory: ~/repo
     steps:
-      - checkout:
-        path: ~/repo
+      - checkout
 
       - run:
-          name: "Install Elixir dependencies"
-          command: mix deps.get
+        name: "Move to /api"
+        command: cd api
+
       - run:
-          name: "Compile Elixir source"
-          command: mix compile
+        name: "Install Elixir dependencies"
+        command: mix deps.get
       - run:
-          name: "Create the test database"
-          command: mix ecto.create
+        name: "Compile Elixir source"
+        command: mix compile
       - run:
-          name: "Run Elixir test suite (with coveralls)"
-          command: mix coveralls
+        name: "Create the test database"
+        command: mix ecto.create
       - run:
-          name: "Run Elixir linting"
-          command: mix credo
+        name: "Run Elixir test suite (with coveralls)"
+        command: mix coveralls
       - run:
-          name: "Run Elixir formatter check"
-          command: mix format --check-formatted
+        name: "Run Elixir linting"
+        command: mix credo
+      - run:
+        name: "Run Elixir formatter check"
+        command: mix format --check-formatted
 
 workflows:
   version: 2
