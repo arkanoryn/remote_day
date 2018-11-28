@@ -48,4 +48,5 @@ config :remote_day, RemoteDay.Repo,
 # config Mailer
 config :remote_day, RemoteDay.Mailer, adapter: Bamboo.LocalAdapter
 
+# test.watch - clear the console on each restart
 config :mix_test_watch, clear: true
