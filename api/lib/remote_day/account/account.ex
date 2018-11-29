@@ -2,10 +2,9 @@ defmodule RemoteDay.Account do
   @moduledoc """
   Account context
   """
-  require Logger
-
   alias RemoteDay.Account.{Auth, Guardian, User}
   alias RemoteDay.Repo
+  require Logger
 
   ###################################
   ###################################
@@ -78,7 +77,7 @@ defmodule RemoteDay.Account do
       {:ok, user, token}
     else
       err ->
-        Logger.error("unable to authenticate user: #{inspect(err)}")
+        Logger.info("action='login' status='failure' reasons='#{inspect(err)}''")
         err
     end
   end

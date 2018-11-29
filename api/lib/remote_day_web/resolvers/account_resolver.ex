@@ -2,10 +2,9 @@ defmodule RemoteDayWeb.Resolvers.Account do
   @moduledoc """
   Module resolves Account related queries
   """
-  require Logger
-
   alias RemoteDay.Account
   alias RemoteDayWeb.ErrorHelpers
+  require Logger
 
   def create_user(
         _root,
@@ -13,29 +12,29 @@ defmodule RemoteDayWeb.Resolvers.Account do
           attrs,
         _info
       ) do
-    Logger.info("Resolver.Account#create_user: begin")
+    Logger.debug("attrs=#{inspect(attrs)}")
 
     with {:ok, _user} <- Account.create_user(attrs),
          {:ok, user, token} <- Account.login(%{email: email, password: pwd}) do
-      Logger.info("Resolver.Account#create_user: success")
+      Logger.info("status='success'", user_id: user.id)
       {:ok, %{user: user, token: token}}
     else
       {:error, %Ecto.Changeset{} = changeset} ->
-        Logger.info("Resolver.Account#create_user:changeset_err\n#{inspect(changeset.errors)}")
+        Logger.info("status='failure' user='unknown' reasons='#{changeset}'", user_id: "unknown")
+        Logger.debug("attrs='#{inspect(attrs)}'", user_id: "unknown")
         {:error, ErrorHelpers.handle_changeset_errors(changeset.errors)}
     end
   end
 
-  def authenticate(_root, %{email: _email, password: _password} = attrs, _info) do
-    Logger.info("Resolver.Account#authenticate: begin")
-
+  def authenticate(_root, %{email: _email, password: _pwd} = attrs, _info) do
     case Account.login(attrs) do
       {:ok, user, token} ->
-        Logger.info("Resolver.Account#authenticate: user [#{user.id}] successfully authenticated")
+        Logger.info("status='success'", user_id: user.id)
         {:ok, %{user: user, token: token}}
 
       {:error, error} ->
-        Logger.info("Resolver.Account#authenticate: err.\n\n#{error}")
+        Logger.info("status='failure' reasons='#{inspect(error)}'", user_id: "unknown")
+
         {:error, "invalid credentials"}
     end
   end

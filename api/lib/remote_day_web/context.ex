@@ -1,11 +1,10 @@
 defmodule RemoteDayWeb.Context do
   @moduledoc false
-
   @behaviour Plug
 
   import Plug.Conn
-
   alias RemoteDay.Account.Guardian
+  require Logger
 
   def init(opts), do: opts
 
@@ -28,9 +27,17 @@ defmodule RemoteDayWeb.Context do
 
   defp authorize(token) do
     case Guardian.decode_and_verify(token) do
-      {:ok, claims} -> Guardian.resource_from_claims(claims)
-      {:error, error} -> {:error, error}
-      nil -> {:error, "Unauthorized"}
+      {:ok, claims} ->
+        Guardian.resource_from_claims(claims)
+
+      {:error, error} ->
+        Logger.info("status='failure' reasons='#{inspect(error)}'")
+        Logger.debug("token='#{token}'")
+        {:error, error}
+
+      nil ->
+        Logger.error("token='#{token}' status='failure' reasons='unknown'")
+        {:error, "Unauthorized"}
     end
   end
 end

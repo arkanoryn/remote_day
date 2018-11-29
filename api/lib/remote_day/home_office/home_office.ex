@@ -2,7 +2,6 @@ defmodule RemoteDay.HomeOffice do
   @moduledoc """
     HomeOffice context.
   """
-
   alias RemoteDay.HomeOffice.Event
   alias RemoteDay.Repo
 

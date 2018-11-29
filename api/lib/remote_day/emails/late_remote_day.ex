@@ -2,7 +2,6 @@ defmodule RemoteDay.Emails.LateRemoteWorkers do
   @moduledoc """
   email to late announcement
   """
-
   import Bamboo.Email
 
   alias RemoteDay.{

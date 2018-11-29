@@ -98,23 +98,11 @@ defmodule RemoteDay.Tests.Account.UserTest do
     test "fails with bad pwd", %{user: user} do
       err = "invalid password"
       assert {:error, ^err} = Account.login(%{email: user.email, password: "wrong password"})
-
-      logs =
-        capture_log(fn -> Account.login(%{email: user.email, password: "wrong password"}) end)
-
-      assert logs =~ "unable to authenticate user:"
-      assert logs =~ err
     end
 
     test "fails with bad email" do
       assert {:error, :unauthorized} =
                Account.login(%{email: "user.email", password: "wrong password"})
-
-      logs =
-        capture_log(fn -> Account.login(%{email: "user.email", password: "wrong password"}) end)
-
-      assert logs =~ "unable to authenticate user:"
-      assert logs =~ "unauthorized"
     end
   end
 end

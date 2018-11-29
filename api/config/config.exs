@@ -19,7 +19,7 @@ config :remote_day, RemoteDayWeb.Endpoint,
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
-  metadata: [:user_id]
+  metadata: [:user_id, :module, :function]
 
 # Configures Guardian
 config :remote_day, RemoteDay.Account.Guardian,

@@ -8,10 +8,8 @@ defmodule RemoteDay.HomeOffice.Event do
   """
   use Ecto.Schema
   use Timex.Ecto.Timestamps
-
   import Ecto.Changeset
   import Ecto.Query, only: [from: 2]
-
   alias RemoteDay.Account.User
 
   @type t :: %__MODULE__{
