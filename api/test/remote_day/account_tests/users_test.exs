@@ -5,7 +5,6 @@ defmodule RemoteDay.Tests.Account.UserTest do
   use RemoteDay.DataCase, async: false
 
   import Comeonin.Bcrypt, only: [checkpw: 2]
-  import ExUnit.CaptureLog
   import RemoteDay.Factory
 
   alias RemoteDay.Account
