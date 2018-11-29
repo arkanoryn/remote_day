@@ -14,10 +14,10 @@ alias RemoteDay.{Account, HomeOffice}
 
 {:ok, user} =
   Account.create_user(%{
-    email: "test3@user.com",
+    email: "test@user.com",
     password: "password",
     password_confirmation: "password",
-    username: "Charlie Doe"
+    username: "Alpha Tester"
   })
 
 HomeOffice.create_event(%{date: Timex.today(), user_id: user.id})
