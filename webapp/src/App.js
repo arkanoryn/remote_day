@@ -5,33 +5,29 @@ import { Provider, connect } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { CookiesProvider, withCookies } from 'react-cookie';
 
-import { client, routes, store, history } from './root';
+import {
+  client, routes, store, history,
+} from './root';
 import './App.css';
 
-const WrappedApp = ({ token }) => {
-  return (
-    <ApolloProvider client={client(token)}>
-      <ConnectedRouter history={history}>
-        {renderRoutes(routes)}
-      </ConnectedRouter>
-    </ApolloProvider>
-  );
-};
+const WrappedApp = ({ token }) => (
+  <ApolloProvider client={client(token)}>
+    <ConnectedRouter history={history}>
+      {renderRoutes(routes)}
+    </ConnectedRouter>
+  </ApolloProvider>
+);
 
-const MapStateToProps = ({ authentication: { token } }) => {
-  return { token };
-};
+const MapStateToProps = ({ authentication: { token } }) => ({ token });
 
 const ConnectedApp = connect(MapStateToProps, null)(WrappedApp);
 
-const App = ({ cookies }) => {
-  return (
-    <CookiesProvider>
-      <Provider store={store(cookies)}>
-        <ConnectedApp />
-      </Provider>
-    </CookiesProvider>
-  );
-};
+const App = ({ cookies }) => (
+  <CookiesProvider>
+    <Provider store={store(cookies)}>
+      <ConnectedApp />
+    </Provider>
+  </CookiesProvider>
+);createRootReducer(history),
 
 export default withCookies(App);
