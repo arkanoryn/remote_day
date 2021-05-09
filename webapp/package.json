@@ -10,7 +10,7 @@
     "graphql-tag": "^2.10.0",
     "history": "^4.7.2",
     "js-md5": "^0.7.3",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "moment": "^2.22.2",
     "react": "^16.5.2",
     "react-apollo": "^2.3.0",
